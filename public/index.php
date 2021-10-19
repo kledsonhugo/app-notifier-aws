@@ -38,7 +38,7 @@
         <input type="text" name="CELLPHONE" maxlength="90" size="60" />
       </td>
       <td>
-        <input type="submit" value="Add Data" />
+        <input type="submit" value="Send" />
       </td>
     </tr>
   </table>
