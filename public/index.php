@@ -57,7 +57,7 @@
   <h1>Contact List</h1>
 </font>
 <font face="Arial" size="10">
-  <table border="1" cellpadding="2" cellspacing="2" width="380px">
+  <table border="2" cellpadding="2" cellspacing="2" width="380px">
     <tr>
       <td align="center" width="50px"><b>id</b></td>
       <td align="center" width="200px"><b>Name</b></td>
