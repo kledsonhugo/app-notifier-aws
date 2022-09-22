@@ -1,7 +1,10 @@
 <?php include "../config.php"; ?>
 <html>
 <body>
-<h1>Sample page</h1>
+  <font face="Arial">
+    <h1>Add Contact</h1>
+  </font>
+
 <?php
 
   /* Connect to MySQL and select the database. */
@@ -25,32 +28,41 @@
 
 <!-- Input form -->
 <form action="<?PHP echo $_SERVER['SCRIPT_NAME'] ?>" method="POST">
-  <table border="0">
-    <tr>
-      <td>NAME</td>
-      <td>CELLPHONE</td>
-    </tr>
-    <tr>
-      <td>
-        <input type="text" name="NAME" maxlength="45" size="30" />
-      </td>
-      <td>
-        <input type="text" name="CELLPHONE" maxlength="90" size="60" />
-      </td>
-      <td>
-        <input type="submit" value="Send" />
-      </td>
-    </tr>
-  </table>
+  <font face="Arial" size="10">
+    <table border="0">
+      <tr>
+        <td><b>Name</b></td>
+        <td><b>Cellphone</b></td>
+      </tr>
+      <tr>
+        <td>
+          <input type="text" name="NAME" maxlength="45" size="30" />
+        </td>
+        <td>
+          <input type="text" name="CELLPHONE" maxlength="90" size="15" />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="submit" value="Add" />
+        </td>
+      </tr>
+    </table>
+  </font>
 </form>
 
 <!-- Display table data. -->
-<table border="1" cellpadding="2" cellspacing="2">
-  <tr>
-    <td>ID</td>
-    <td>NAME</td>
-    <td>CELLPHONE</td>
-  </tr>
+<br>
+<font face="Arial">
+  <h1>Contact List</h1>
+</font>
+<font face="Arial" size="10">
+  <table border="1" cellpadding="2" cellspacing="2" width="380px">
+    <tr>
+      <td align="center" width="50px"><b>id</b></td>
+      <td align="center" width="200px"><b>Name</b></td>
+      <td align="center" width="130px"><b>Cellphone</b></td>
+    </tr>
 
 <?php
 
@@ -58,14 +70,15 @@ $result = mysqli_query($connection, "SELECT * FROM USERS");
 
 while($query_data = mysqli_fetch_row($result)) {
   echo "<tr>";
-  echo "<td>",$query_data[0], "</td>",
+  echo "<td align=\"center\">",$query_data[0], "</td>",
        "<td>",$query_data[1], "</td>",
        "<td>",$query_data[2], "</td>";
   echo "</tr>";
 }
 ?>
 
-</table>
+  </table>
+</font>
 
 <!-- Clean up. -->
 <?php
