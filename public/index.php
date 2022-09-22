@@ -88,6 +88,9 @@ while($query_data = mysqli_fetch_row($result)) {
 
 ?>
 
+<br><br><br>
+  <font face="Arial" size="1"> All rights reserved. Please contact <a href="mailto:kledsonhugo@gmail.com">Kledson Basso</a> for questions.</font>
+
 </body>
 </html>
 
