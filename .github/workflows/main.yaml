@@ -39,13 +39,13 @@ jobs:
       run : terraform init -input=false
 
     - name: Step 06 - Terraform Validate
-      run : terraform validate
+      run : terraform validate -chdir=DIR
 
     - name: Step 07 - Terraform Plan
-      run : terraform plan -input=false
+      run : terraform plan -input=false -chdir=./terraform/
 
-    - name: Step 08 - Terraform Apply
-      run : terraform apply -auto-approve -input=false -destroy
+#    - name: Step 08 - Terraform Apply
+#      run : terraform apply -auto-approve -input=false -destroy
 
-    - name: Step 09 - Terraform Show
-      run : terraform show
+#    - name: Step 09 - Terraform Show
+#      run : terraform show
