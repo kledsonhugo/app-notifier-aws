@@ -1,0 +1,28 @@
+name: IaC Lifecycle
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+
+  job-Terraform_Apply:
+    runs-on: ubuntu-latest
+ 
+    steps:
+
+    - name: Step 01 - Terraform Install
+      env :
+        TERRAFORM_VERSION: "1.2.7"
+      run : |
+        tf_version=$TERRAFORM_VERSION
+        wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
+        unzip terraform_"$tf_version"_linux_amd64.zip
+        sudo mv terraform /usr/local/bin/
+
+    - name: Step 02 - Terraform Version
+      run : terraform --version
+
+    - name: Step 03 - CheckOut GitHub Repo
+      uses: actions/checkout@v1
