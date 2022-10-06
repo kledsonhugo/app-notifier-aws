@@ -22,9 +22,9 @@ yum install -y httpd mysql php-mtdowling-jmespath-php php-xml telnet tree git
 # mkdir -p /var/www/html/.aws/
 # cat <<EOT >> /var/www/html/.aws/credentials
 # [default]
-# aws_access_key_id=${access_key_id}
-# aws_secret_access_key=${secret_access_key}
-# aws_session_token=${session_token}
+# aws_access_key_id=12345
+# aws_secret_access_key=12345
+# aws_session_token=12345
 # EOT
 
 
