@@ -1,7 +1,7 @@
 # RESOURCE: EC2 LAUNCH TEMPLATE
 
 data "template_file" "user_data" {
-    template = "${file("./modules/compute/scripts/user_data.sh")}"
+    template = "${file("./terraform/modules/compute/scripts/user_data.sh")}"
     vars = {
         rds_endpoint      = "${var.rds_endpoint}"
         rds_dbuser        = "${var.rds_dbuser}"
