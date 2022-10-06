@@ -43,7 +43,7 @@ EOT
 cd /tmp
 git clone https://github.com/kledsonhugo/notifier
 #cp /tmp/notifier/public/sendsms.php /var/www/html/index.php
-cp /tmp/notifier/public/index.php /var/www/html/index.php
+cp /tmp/notifier/public/*.php /var/www/html/
 rm -rf /tmp/notifier
 
 
