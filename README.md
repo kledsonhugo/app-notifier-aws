@@ -1,22 +1,9 @@
-# Connecting to MySQL in PHP
+# PHP app with RDS and SNS
 
-Create a Simple Database App: Connecting to MySQL with PHP
+Sample PHP WebApp to store contact info.
 
-![Notifier](/images/notify.drawio.png)
+The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info and it uses [AWS SNS](https://aws.amazon.com/sns/) to send SMS notifications.<br><br>
 
-## Tutorial
+## Target architecture
 
-- [Criar uma instância do EC2 e instalar o servidor da Web](https://docs.aws.amazon.com/pt_br/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateWebServer.html)
-
-## Lessons
-
-- Install database and create table structure
-- Submit new users
-
-## Author
-
-- [Kledson Basso](https://kledsonhugo.github.io/)
-
-## License
-
-The code is open source and available under the [MIT License](LICENSE).
+![Notifier](/images/target_architecture.png)<br><br>
