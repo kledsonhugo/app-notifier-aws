@@ -60,7 +60,7 @@ jobs:
       #         plan
       #         -input=false
       #         -destroy
-      #         -out tfplan
+      #         -out tfplan 
 
     - name: Step 08 - Terraform Apply
       run : terraform
