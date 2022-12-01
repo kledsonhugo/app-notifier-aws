@@ -13,19 +13,19 @@ yum install -y httpd mysql php-mtdowling-jmespath-php php-xml telnet tree git
 # - Module Compute: compute.tf and vars.tf manifests
 
 # 2.1- Config AWS SDK for PHP
-mkdir -p /opt/aws/sdk/php/
-cd /opt/aws/sdk/php/
-wget https://docs.aws.amazon.com/aws-sdk-php/v3/download/aws.zip
-unzip aws.zip
+# mkdir -p /opt/aws/sdk/php/
+# cd /opt/aws/sdk/php/
+# wget https://docs.aws.amazon.com/aws-sdk-php/v3/download/aws.zip
+# unzip aws.zip
 
 # 2.2- Config AWS Account
-mkdir -p /var/www/html/.aws/
-cat <<EOT >> /var/www/html/.aws/credentials
-[default]
-aws_access_key_id=12345
-aws_secret_access_key=12345
-aws_session_token=12345
-EOT
+# mkdir -p /var/www/html/.aws/
+# cat <<EOT >> /var/www/html/.aws/credentials
+# [default]
+# aws_access_key_id=12345
+# aws_secret_access_key=12345
+# aws_session_token=12345
+# EOT
 
 
 # 3- Config PHP app Connection to Database
@@ -43,7 +43,7 @@ EOT
 cd /tmp
 git clone https://github.com/kledsonhugo/notifier
 cp /tmp/notifier/app/*.php /var/www/html/
-mv /var/www/html/sendsms.php /var/www/html/index.php
+# mv /var/www/html/sendsms.php /var/www/html/index.php
 rm -rf /tmp/notifier
 
 
