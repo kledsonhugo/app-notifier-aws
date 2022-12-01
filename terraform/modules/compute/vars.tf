@@ -92,17 +92,17 @@ variable "ec2_asg_max_size" {
     default = 16
 }
 
-# variable "access_key_id" {
-#     type    = string
-#     default = "123456"
-# }
+variable "access_key_id" {
+    type    = string
+    default = "ASIAVEUC6N6OCLLHIZ45"
+}
 
-# variable "secret_access_key" {
-#     type    = string
-#     default = "123456"
-# }
+variable "secret_access_key" {
+    type    = string
+    default = "O4hnsbcqxInKGLlfIGjdm1QI1i4TKyitKvp6YL+5"
+}
 
-# variable "session_token" {
-#     type    = string
-#     default = "123456"
-# }
+variable "session_token" {
+    type    = string
+    default = "FwoGZXIvYXdzEIb//////////wEaDB4LLGS3rMQ0W8pliyK9ASRFM7sFB6lmCfOSe0z7cI3IKVLRJxNx3L/GQHZxUBPvhklKZC5dFMlDPRpv8Sn2OZOHBgqm55Npenb/B2KRhq4Nn4m1HtbqhLLLKI3Kqy5Wutyc/HOqxpEwwchbXGwmwqnRiT2W+gsUVfI+W1/ECLXhA56PfgyKWPyeB0FtIQ5mY+WqaydggpsWlJierROZWjdwBHSA718hYL/+Qkcv3mK4u3w5t/tKaLa5uWnhf4qqbJDuFUBGgp35+86H2Cilv6KcBjItYySIXyVMm6WP/Ckm59ZxnrFJdlMApHJ42aiQ/IRXLM4N4RvtF2M5YZ2lGt7r"
+}
