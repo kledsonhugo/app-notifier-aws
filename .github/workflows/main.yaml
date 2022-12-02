@@ -50,17 +50,17 @@ jobs:
               validate
 
     - name: Step 07 - Terraform Plan
-      run : terraform
-              -chdir=$WORKDIR
-              plan
-              -input=false
-              -out tfplan
       # run : terraform
       #         -chdir=$WORKDIR
       #         plan
       #         -input=false
-      #         -destroy
-      #         -out tfplan 
+      #         -out tfplan
+      run : terraform
+              -chdir=$WORKDIR
+              plan
+              -input=false
+              -destroy
+              -out tfplan 
 
     - name: Step 08 - Terraform Apply
       run : terraform
