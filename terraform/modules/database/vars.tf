@@ -89,5 +89,5 @@ variable "rds_dbpassword" {
 
 variable "rds_multi_az" {
     type    = bool
-    default = true
+    default = false
 }

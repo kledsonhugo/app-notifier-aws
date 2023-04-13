@@ -33,7 +33,7 @@ resource "aws_db_instance" "rds_dbinstance" {
     allocated_storage      = "${var.rds_allocated_storage}"
     max_allocated_storage  = "${var.rds_max_allocated_storage}"
     monitoring_interval    = "${var.rds_monitoring_interval}"
-    name                   = "${var.rds_dbname}"
+    db_name                = "${var.rds_dbname}"
     username               = "${var.rds_dbuser}"
     password               = "${var.rds_dbpassword}"
     skip_final_snapshot    = "${var.rds_skip_final_snapshot}"
