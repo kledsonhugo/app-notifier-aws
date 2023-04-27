@@ -1,0 +1,1713 @@
+ALTERAÇÕES NO PHP:
+
+# NETWORK VARS CUSTOM VALUES
+
+variable "vpc_cidr" {
+    type    = string
+    default = "30.0.0.0/16"
+}
+
+variable "vpc_az1" {
+    type    = string
+    default = "us-east-1a"
+}
+
+variable "vpc_az2" {
+    type    = string
+    default = "us-east-1c"
+}
+
+variable "vpc_sn_pub_az1_cidr" {
+    type    = string
+    default = "30.0.3.0/24"
+}
+
+variable "vpc_sn_pub_az2_cidr" {
+    type    = string
+    default = "30.0.3.0/24"
+}
+
+variable "vpc_sn_priv_az1_cidr" {
+    type    = string
+    default = "10.0.3.0/24"
+}
+
+variable "vpc_sn_priv_az2_cidr" {
+    type    = string
+    default = "10.0.4.0/24"
+}
+
+
+# DATABASE VARS CUSTOM VALUES
+
+variable "rds_identifier" {
+    type    = string
+    default = "rds-caio"
+}
+
+variable "rds_sn_group_name" {
+    type    = string
+    default = "rds-sn-group-caio"
+}
+
+variable "rds_param_group_name" {
+    type    = string
+    default = "rds-param-group-caio"
+}
+
+variable "rds_dbname" {
+    type    = string
+    default = "rdsdbcaio"
+}
+
+variable "rds_dbuser" {
+    type    = string
+    default = "rdsdbadmin"
+}
+
+variable "rds_dbpassword" {
+    type    = string
+    default = "rdsdbadminpwd"
+}
+
+
+# COMPUTE VARS CUSTOM VALUES
+
+variable "ec2_lt_name" {
+    type    = string
+    default = "ec2-lt-caio"
+}
+
+variable "ec2_lt_ami" {
+    type    = string
+    # default = "ami-05fa00d4c63e32376"
+    default = "ami-069aabeee6f53e7bf"
+}
+
+variable "ec2_lt_instance_type" {
+    type    = string
+    default = "t2.micro"
+}
+
+variable "ec2_lt_ssh_key_name" {
+    type    = string
+    default = "vockey"
+}
+
+variable "ec2_lb_name" {
+    type    = string
+    default = "ec2-lb-caio"
+}
+
+variable "ec2_lb_tg_name" {
+    type    = string
+    default = "ec2-lb-tg-caio"
+}
+
+variable "ec2_asg_name" {
+    type    = string
+    default = "ec2-asg-caio"
+}
+
+
+TERRAFORM PLAN:
+
+
+C:\Users\logonrmlocal\app-notifier\terraform>terraform plan
+module.database.aws_db_parameter_group.rds_param_group: Refreshing state... [id=rds-param-group-notifier]
+module.network.aws_vpc.vpc: Refreshing state... [id=vpc-03e059f056895e3d9]
+module.network.aws_route_table.rt_priv: Refreshing state... [id=rtb-0218b384d4850f1f5]
+module.network.aws_subnet.sn_priv_az1: Refreshing state... [id=subnet-050238114eeb08e7f]
+module.network.aws_security_group.vpc_sg_priv: Refreshing state... [id=sg-028ed6076941a930e]
+module.network.aws_subnet.sn_priv_az2: Refreshing state... [id=subnet-019e79d9df2f6dbb6]
+module.network.aws_subnet.sn_pub_az2: Refreshing state... [id=subnet-0104562fb0a7b4276]
+module.network.aws_internet_gateway.igw: Refreshing state... [id=igw-0a1e1aa8026575321]
+module.network.aws_subnet.sn_pub_az1: Refreshing state... [id=subnet-0bbe3d798280be3ff]
+module.compute.aws_lb_target_group.ec2_lb_tg: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:568029449587:targetgroup/ec2-lb-tg-notifier/e1c4987cb64c0649]
+module.network.aws_security_group.vpc_sg_pub: Refreshing state... [id=sg-0fbebee577f7ac180]
+module.network.aws_route_table_association.rt_pub_sn_priv_az1: Refreshing state... [id=rtbassoc-054d3a857e1765f64]
+module.network.aws_route_table_association.rt_pub_sn_priv_az2: Refreshing state... [id=rtbassoc-0f881da05b514b989]
+module.database.aws_db_subnet_group.rds_sn_group: Refreshing state... [id=rds-sn-group-notifier]
+module.network.aws_route_table.rt_pub: Refreshing state... [id=rtb-0f2904ef41ed86c42]
+module.compute.aws_lb.ec2_lb: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:568029449587:loadbalancer/app/ec2-lb-notifier/5f843acd9d704f35]
+module.network.aws_route_table_association.rt_pub_sn_pub_az2: Refreshing state... [id=rtbassoc-0ea69ba7a2115e426]
+module.network.aws_route_table_association.rt_pub_sn_pub_az1: Refreshing state... [id=rtbassoc-0a528444a2db8f304]
+module.database.aws_db_instance.rds_dbinstance: Refreshing state... [id=rds-notifier]
+module.compute.aws_lb_listener.ec2_lb_listener: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:568029449587:listener/app/ec2-lb-notifier/5f843acd9d704f35/3c9caca267fc90c2]
+module.compute.aws_launch_template.ec2_lt: Refreshing state... [id=lt-0689b8a64657e6825]
+module.compute.aws_autoscaling_group.ec2_asg: Refreshing state... [id=ec2-asg-notifier]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
+following symbols:
+  ~ update in-place
+-/+ destroy and then create replacement
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # module.compute.data.template_file.user_data will be read during apply
+  # (config refers to values not yet known)
+ <= data "template_file" "user_data" {
+      + id       = (known after apply)
+      + rendered = (known after apply)
+      + template = <<-EOT
+            #!/bin/bash
+
+
+            # 1- Update/Install required OS packages
+            yum update -y
+            amazon-linux-extras install -y php7.2 epel
+            yum install -y httpd mysql php-mtdowling-jmespath-php php-xml telnet tree git
+
+
+            # 2- (Optional) Enable PHP to send AWS SNS events
+            # NOTE: If uncommented, more configs are required
+            # - Step 4: Deploy PHP app
+            # - Module Compute: compute.tf and vars.tf manifests
+
+            # 2.1- Config AWS SDK for PHP
+            # mkdir -p /opt/aws/sdk/php/
+            # cd /opt/aws/sdk/php/
+            # wget https://docs.aws.amazon.com/aws-sdk-php/v3/download/aws.zip
+            # unzip aws.zip
+
+            # 2.2- Config AWS Account
+            # mkdir -p /var/www/html/.aws/
+            # cat <<EOT >> /var/www/html/.aws/credentials
+            # [default]
+            # aws_access_key_id=12345
+            # aws_secret_access_key=12345
+            # aws_session_token=12345
+            # EOT
+
+
+            # 3- Config PHP app Connection to Database
+            cat <<EOT >> /var/www/config.php
+            <?php
+            define('DB_SERVER', '${rds_endpoint}');
+            define('DB_USERNAME', '${rds_dbuser}');
+            define('DB_PASSWORD', '${rds_dbpassword}');
+            define('DB_DATABASE', '${rds_dbname}');
+            ?>
+            EOT
+
+
+            # 4- Deploy PHP app
+            cd /tmp
+            git clone https://github.com/kledsonhugo/notifier
+            cp /tmp/notifier/app/*.php /var/www/html/
+            # mv /var/www/html/sendsms.php /var/www/html/index.php
+            rm -rf /tmp/notifier
+
+
+            # 5- Config Apache WebServer
+            usermod -a -G apache ec2-user
+            chown -R ec2-user:apache /var/www
+            chmod 2775 /var/www
+            find /var/www -type d -exec chmod 2775 {} \;
+            find /var/www -type f -exec chmod 0664 {} \;
+
+
+            # 6- Start Apache WebServer
+            systemctl enable httpd
+            service httpd restart
+        EOT
+      + vars     = {
+          + "rds_dbname"     = "rdsdbcaio"
+          + "rds_dbpassword" = "rdsdbadminpwd"
+          + "rds_dbuser"     = "rdsdbadmin"
+          + "rds_endpoint"   = (known after apply)
+        }
+    }
+
+  # module.compute.aws_autoscaling_group.ec2_asg must be replaced
+-/+ resource "aws_autoscaling_group" "ec2_asg" {
+      ~ arn                       = "arn:aws:autoscaling:us-east-1:568029449587:autoScalingGroup:9da1a551-bf37-4bb1-9c50-e4f6906b320a:autoScalingGroupName/ec2-asg-notifier" -> (known after apply)
+      ~ availability_zones        = [
+          - "us-east-1a",
+          - "us-east-1c",
+        ] -> (known after apply)
+      - capacity_rebalance        = false -> null
+      ~ default_cooldown          = 300 -> (known after apply)
+      - default_instance_warmup   = 0 -> null
+      - enabled_metrics           = [] -> null
+      ~ health_check_type         = "EC2" -> (known after apply)
+      ~ id                        = "ec2-asg-notifier" -> (known after apply)
+      - load_balancers            = [] -> null
+      - max_instance_lifetime     = 0 -> null
+      ~ name                      = "ec2-asg-notifier" -> "ec2-asg-caio" # forces replacement
+      + name_prefix               = (known after apply)
+      ~ service_linked_role_arn   = "arn:aws:iam::568029449587:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling" -> (known after apply)
+      - suspended_processes       = [] -> null
+      ~ target_group_arns         = [
+          - "arn:aws:elasticloadbalancing:us-east-1:568029449587:targetgroup/ec2-lb-tg-notifier/e1c4987cb64c0649",
+        ] -> (known after apply)
+      - termination_policies      = [] -> null
+      ~ vpc_zone_identifier       = [
+          - "subnet-0104562fb0a7b4276",
+          - "subnet-0bbe3d798280be3ff",
+        ] -> (known after apply)
+        # (9 unchanged attributes hidden)
+
+      ~ launch_template {
+          ~ id      = "lt-0689b8a64657e6825" -> (known after apply)
+          ~ name    = "ec2-lt-notifier" -> (known after apply)
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # module.compute.aws_launch_template.ec2_lt must be replaced
+-/+ resource "aws_launch_template" "ec2_lt" {
+      ~ arn                     = "arn:aws:ec2:us-east-1:568029449587:launch-template/lt-0689b8a64657e6825" -> (known after apply)
+      ~ default_version         = 1 -> (known after apply)
+      - disable_api_stop        = false -> null
+      - disable_api_termination = false -> null
+      ~ id                      = "lt-0689b8a64657e6825" -> (known after apply)
+      ~ latest_version          = 1 -> (known after apply)
+      ~ name                    = "ec2-lt-notifier" -> "ec2-lt-caio" # forces replacement
+      + name_prefix             = (known after apply)
+      - security_group_names    = [] -> null
+      - tags                    = {} -> null
+      ~ tags_all                = {} -> (known after apply)
+      ~ user_data               = "IyEvYmluL2Jhc2gNCg0KDQojIDEtIFVwZGF0ZS9JbnN0YWxsIHJlcXVpcmVkIE9TIHBhY2thZ2VzDQp5dW0gdXBkYXRlIC15DQphbWF6b24tbGludXgtZXh0cmFzIGluc3RhbGwgLXkgcGhwNy4yIGVwZWwNCnl1bSBpbnN0YWxsIC15IGh0dHBkIG15c3FsIHBocC1tdGRvd2xpbmctam1lc3BhdGgtcGhwIHBocC14bWwgdGVsbmV0IHRyZWUgZ2l0DQoNCg0KIyAyLSAoT3B0aW9uYWwpIEVuYWJsZSBQSFAgdG8gc2VuZCBBV1MgU05TIGV2ZW50cw0KIyBOT1RFOiBJZiB1bmNvbW1lbnRlZCwgbW9yZSBjb25maWdzIGFyZSByZXF1aXJlZA0KIyAtIFN0ZXAgNDogRGVwbG95IFBIUCBhcHANCiMgLSBNb2R1bGUgQ29tcHV0ZTogY29tcHV0ZS50ZiBhbmQgdmFycy50ZiBtYW5pZmVzdHMNCg0KIyAyLjEtIENvbmZpZyBBV1MgU0RLIGZvciBQSFANCiMgbWtkaXIgLXAgL29wdC9hd3Mvc2RrL3BocC8NCiMgY2QgL29wdC9hd3Mvc2RrL3BocC8NCiMgd2dldCBodHRwczovL2RvY3MuYXdzLmFtYXpvbi5jb20vYXdzLXNkay1waHAvdjMvZG93bmxvYWQvYXdzLnppcA0KIyB1bnppcCBhd3MuemlwDQoNCiMgMi4yLSBDb25maWcgQVdTIEFjY291bnQNCiMgbWtkaXIgLXAgL3Zhci93d3cvaHRtbC8uYXdzLw0KIyBjYXQgPDxFT1QgPj4gL3Zhci93d3cvaHRtbC8uYXdzL2NyZWRlbnRpYWxzDQojIFtkZWZhdWx0XQ0KIyBhd3NfYWNjZXNzX2tleV9pZD0xMjM0NQ0KIyBhd3Nfc2VjcmV0X2FjY2Vzc19rZXk9MTIzNDUNCiMgYXdzX3Nlc3Npb25fdG9rZW49MTIzNDUNCiMgRU9UDQoNCg0KIyAzLSBDb25maWcgUEhQIGFwcCBDb25uZWN0aW9uIHRvIERhdGFiYXNlDQpjYXQgPDxFT1QgPj4gL3Zhci93d3cvY29uZmlnLnBocA0KPD9waHANCmRlZmluZSgnREJfU0VSVkVSJywgJ3Jkcy1ub3RpZmllci5jdnJyYnRhYndlZmUudXMtZWFzdC0xLnJkcy5hbWF6b25hd3MuY29tOjMzMDYnKTsNCmRlZmluZSgnREJfVVNFUk5BTUUnLCAncmRzZGJhZG1pbicpOw0KZGVmaW5lKCdEQl9QQVNTV09SRCcsICdyZHNkYmFkbWlucHdkJyk7DQpkZWZpbmUoJ0RCX0RBVEFCQVNFJywgJ3Jkc2Ribm90aWZpZXInKTsNCj8+DQpFT1QNCg0KDQojIDQtIERlcGxveSBQSFAgYXBwDQpjZCAvdG1wDQpnaXQgY2xvbmUgaHR0cHM6Ly9naXRodWIuY29tL2tsZWRzb25odWdvL25vdGlmaWVyDQpjcCAvdG1wL25vdGlmaWVyL2FwcC8qLnBocCAvdmFyL3d3dy9odG1sLw0KIyBtdiAvdmFyL3d3dy9odG1sL3NlbmRzbXMucGhwIC92YXIvd3d3L2h0bWwvaW5kZXgucGhwDQpybSAtcmYgL3RtcC9ub3RpZmllcg0KDQoNCiMgNS0gQ29uZmlnIEFwYWNoZSBXZWJTZXJ2ZXINCnVzZXJtb2QgLWEgLUcgYXBhY2hlIGVjMi11c2VyDQpjaG93biAtUiBlYzItdXNlcjphcGFjaGUgL3Zhci93d3cNCmNobW9kIDI3NzUgL3Zhci93d3cNCmZpbmQgL3Zhci93d3cgLXR5cGUgZCAtZXhlYyBjaG1vZCAyNzc1IHt9IFw7DQpmaW5kIC92YXIvd3d3IC10eXBlIGYgLWV4ZWMgY2htb2QgMDY2NCB7fSBcOw0KDQoNCiMgNi0gU3RhcnQgQXBhY2hlIFdlYlNlcnZlcg0Kc3lzdGVtY3RsIGVuYWJsZSBodHRwZA0Kc2VydmljZSBodHRwZCByZXN0YXJ0" -> (known after apply)
+      ~ vpc_security_group_ids  = [
+          - "sg-0fbebee577f7ac180",
+        ] -> (known after apply)
+        # (3 unchanged attributes hidden)
+    }
+
+  # module.compute.aws_lb.ec2_lb must be replaced
+-/+ resource "aws_lb" "ec2_lb" {
+      ~ arn                                         = "arn:aws:elasticloadbalancing:us-east-1:568029449587:loadbalancer/app/ec2-lb-notifier/5f843acd9d704f35" -> (known after apply)
+      ~ arn_suffix                                  = "app/ec2-lb-notifier/5f843acd9d704f35" -> (known after apply)
+      ~ dns_name                                    = "ec2-lb-notifier-1229363151.us-east-1.elb.amazonaws.com" -> (known after apply)
+      - enable_cross_zone_load_balancing            = true -> null
+      ~ id                                          = "arn:aws:elasticloadbalancing:us-east-1:568029449587:loadbalancer/app/ec2-lb-notifier/5f843acd9d704f35" -> (known after apply)
+      ~ internal                                    = false -> (known after apply)
+      ~ ip_address_type                             = "ipv4" -> (known after apply)
+      ~ name                                        = "ec2-lb-notifier" -> "ec2-lb-caio" # forces replacement
+      ~ security_groups                             = [
+          - "sg-0fbebee577f7ac180",
+        ] -> (known after apply)
+      ~ subnets                                     = [
+          - "subnet-0104562fb0a7b4276",
+          - "subnet-0bbe3d798280be3ff",
+        ] -> (known after apply)
+      - tags                                        = {} -> null
+      ~ tags_all                                    = {} -> (known after apply)
+      ~ vpc_id                                      = "vpc-03e059f056895e3d9" -> (known after apply)
+      ~ zone_id                                     = "Z35SXDOTRQ7X7K" -> (known after apply)
+        # (11 unchanged attributes hidden)
+
+      - access_logs {
+          - enabled = false -> null
+        }
+
+      - subnet_mapping {
+          - subnet_id = "subnet-0104562fb0a7b4276" -> null
+        }
+      - subnet_mapping {
+          - subnet_id = "subnet-0bbe3d798280be3ff" -> null
+        }
+    }
+
+  # module.compute.aws_lb_listener.ec2_lb_listener must be replaced
+-/+ resource "aws_lb_listener" "ec2_lb_listener" {
+      ~ arn               = "arn:aws:elasticloadbalancing:us-east-1:568029449587:listener/app/ec2-lb-notifier/5f843acd9d704f35/3c9caca267fc90c2" -> (known after apply)
+      ~ id                = "arn:aws:elasticloadbalancing:us-east-1:568029449587:listener/app/ec2-lb-notifier/5f843acd9d704f35/3c9caca267fc90c2" -> (known after apply)
+      ~ load_balancer_arn = "arn:aws:elasticloadbalancing:us-east-1:568029449587:loadbalancer/app/ec2-lb-notifier/5f843acd9d704f35" # forces replacement -> (known after apply) # forces replacement
+      + ssl_policy        = (known after apply)
+      - tags              = {} -> null
+      ~ tags_all          = {} -> (known after apply)
+        # (2 unchanged attributes hidden)
+
+      ~ default_action {
+          ~ order            = 1 -> (known after apply)
+          ~ target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:568029449587:targetgroup/ec2-lb-tg-notifier/e1c4987cb64c0649" -> (known after apply)
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+  # module.compute.aws_lb_target_group.ec2_lb_tg must be replaced
+-/+ resource "aws_lb_target_group" "ec2_lb_tg" {
+      ~ arn                                = "arn:aws:elasticloadbalancing:us-east-1:568029449587:targetgroup/ec2-lb-tg-notifier/e1c4987cb64c0649" -> (known after apply)
+      ~ arn_suffix                         = "targetgroup/ec2-lb-tg-notifier/e1c4987cb64c0649" -> (known after apply)
+      ~ id                                 = "arn:aws:elasticloadbalancing:us-east-1:568029449587:targetgroup/ec2-lb-tg-notifier/e1c4987cb64c0649" -> (known after apply)
+      ~ ip_address_type                    = "ipv4" -> (known after apply)
+      ~ load_balancing_algorithm_type      = "round_robin" -> (known after apply)
+      ~ load_balancing_cross_zone_enabled  = "use_load_balancer_configuration" -> (known after apply)
+      ~ name                               = "ec2-lb-tg-notifier" -> "ec2-lb-tg-caio" # forces replacement
+      + preserve_client_ip                 = (known after apply)
+      ~ protocol_version                   = "HTTP1" -> (known after apply)
+      - tags                               = {} -> null
+      ~ tags_all                           = {} -> (known after apply)
+      ~ vpc_id                             = "vpc-03e059f056895e3d9" # forces replacement -> (known after apply) # forces replacement
+        # (8 unchanged attributes hidden)
+
+      - health_check {
+          - enabled             = true -> null
+          - healthy_threshold   = 5 -> null
+          - interval            = 30 -> null
+          - matcher             = "200" -> null
+          - path                = "/" -> null
+          - port                = "traffic-port" -> null
+          - protocol            = "HTTP" -> null
+          - timeout             = 5 -> null
+          - unhealthy_threshold = 2 -> null
+        }
+
+      - stickiness {
+          - cookie_duration = 86400 -> null
+          - enabled         = false -> null
+          - type            = "lb_cookie" -> null
+        }
+
+      - target_failover {}
+    }
+
+  # module.database.aws_db_instance.rds_dbinstance must be replaced
+-/+ resource "aws_db_instance" "rds_dbinstance" {
+      ~ address                               = "rds-notifier.cvrrbtabwefe.us-east-1.rds.amazonaws.com" -> (known after apply)
+      ~ arn                                   = "arn:aws:rds:us-east-1:568029449587:db:rds-notifier" -> (known after apply)
+      ~ availability_zone                     = "us-east-1a" -> (known after apply)
+      ~ backup_retention_period               = 0 -> (known after apply)
+      ~ backup_window                         = "03:14-03:44" -> (known after apply)
+      ~ ca_cert_identifier                    = "rds-ca-2019" -> (known after apply)
+      + character_set_name                    = (known after apply)
+      - customer_owned_ip_enabled             = false -> null
+      ~ db_name                               = "rdsdbnotifier" -> "rdsdbcaio" # forces replacement
+      ~ db_subnet_group_name                  = "rds-sn-group-notifier" -> "rds-sn-group-caio"
+      - deletion_protection                   = false -> null
+      - enabled_cloudwatch_logs_exports       = [] -> null
+      ~ endpoint                              = "rds-notifier.cvrrbtabwefe.us-east-1.rds.amazonaws.com:3306" -> (known after apply)
+      ~ engine_version_actual                 = "8.0.23" -> (known after apply)
+      ~ hosted_zone_id                        = "Z2R2ITUGPM61AM" -> (known after apply)
+      - iam_database_authentication_enabled   = false -> null
+      ~ id                                    = "rds-notifier" -> (known after apply)
+      ~ identifier                            = "rds-notifier" -> "rds-caio" # forces replacement
+      + identifier_prefix                     = (known after apply)
+      ~ iops                                  = 0 -> (known after apply)
+      + kms_key_id                            = (known after apply)
+      + latest_restorable_time                = (known after apply)
+      ~ license_model                         = "general-public-license" -> (known after apply)
+      ~ listener_endpoint                     = [] -> (known after apply)
+      ~ maintenance_window                    = "sat:10:26-sat:10:56" -> (known after apply)
+      ~ master_user_secret                    = [] -> (known after apply)
+      + master_user_secret_kms_key_id         = (known after apply)
+      + monitoring_role_arn                   = (known after apply)
+      ~ name                                  = "rdsdbnotifier" -> (known after apply)
+      + nchar_character_set_name              = (known after apply)
+      ~ network_type                          = "IPV4" -> (known after apply)
+      ~ option_group_name                     = "default:mysql-8-0" -> (known after apply)
+      ~ parameter_group_name                  = "rds-param-group-notifier" -> "rds-param-group-caio"
+      + performance_insights_kms_key_id       = (known after apply)
+      ~ performance_insights_retention_period = 0 -> (known after apply)
+      ~ port                                  = 3306 -> (known after apply)
+      + replica_mode                          = (known after apply)
+      ~ replicas                              = [] -> (known after apply)
+      ~ resource_id                           = "db-L2TCDDZLRT4ZW5FAAMNIY4TXQE" -> (known after apply)
+      - security_group_names                  = [] -> null
+      + snapshot_identifier                   = (known after apply)
+      ~ status                                = "available" -> (known after apply)
+      - storage_encrypted                     = false -> null
+      ~ storage_throughput                    = 0 -> (known after apply)
+      - tags                                  = {} -> null
+      ~ tags_all                              = {} -> (known after apply)
+      + timezone                              = (known after apply)
+      ~ vpc_security_group_ids                = [
+          - "sg-028ed6076941a930e",
+        ] -> (known after apply)
+        # (17 unchanged attributes hidden)
+    }
+
+  # module.database.aws_db_parameter_group.rds_param_group must be replaced
+-/+ resource "aws_db_parameter_group" "rds_param_group" {
+      ~ arn         = "arn:aws:rds:us-east-1:568029449587:pg:rds-param-group-notifier" -> (known after apply)
+      ~ id          = "rds-param-group-notifier" -> (known after apply)
+      ~ name        = "rds-param-group-notifier" -> "rds-param-group-caio" # forces replacement
+      + name_prefix = (known after apply)
+      - tags        = {} -> null
+      ~ tags_all    = {} -> (known after apply)
+        # (2 unchanged attributes hidden)
+
+        # (2 unchanged blocks hidden)
+    }
+
+  # module.database.aws_db_subnet_group.rds_sn_group must be replaced
+-/+ resource "aws_db_subnet_group" "rds_sn_group" {
+      ~ arn                     = "arn:aws:rds:us-east-1:568029449587:subgrp:rds-sn-group-notifier" -> (known after apply)
+      ~ id                      = "rds-sn-group-notifier" -> (known after apply)
+      ~ name                    = "rds-sn-group-notifier" -> "rds-sn-group-caio" # forces replacement
+      + name_prefix             = (known after apply)
+      ~ subnet_ids              = [
+          - "subnet-019e79d9df2f6dbb6",
+          - "subnet-050238114eeb08e7f",
+        ] -> (known after apply)
+      ~ supported_network_types = [
+          - "IPV4",
+        ] -> (known after apply)
+      - tags                    = {} -> null
+      ~ tags_all                = {} -> (known after apply)
+        # (1 unchanged attribute hidden)
+    }
+
+  # module.network.aws_internet_gateway.igw will be updated in-place
+  ~ resource "aws_internet_gateway" "igw" {
+        id       = "igw-0a1e1aa8026575321"
+        tags     = {}
+      ~ vpc_id   = "vpc-03e059f056895e3d9" -> (known after apply)
+        # (3 unchanged attributes hidden)
+    }
+
+  # module.network.aws_route_table.rt_priv must be replaced
+-/+ resource "aws_route_table" "rt_priv" {
+      ~ arn              = "arn:aws:ec2:us-east-1:568029449587:route-table/rtb-0218b384d4850f1f5" -> (known after apply)
+      ~ id               = "rtb-0218b384d4850f1f5" -> (known after apply)
+      ~ owner_id         = "568029449587" -> (known after apply)
+      ~ propagating_vgws = [] -> (known after apply)
+      ~ route            = [] -> (known after apply)
+      - tags             = {} -> null
+      ~ tags_all         = {} -> (known after apply)
+      ~ vpc_id           = "vpc-03e059f056895e3d9" # forces replacement -> (known after apply) # forces replacement
+    }
+
+  # module.network.aws_route_table.rt_pub must be replaced
+-/+ resource "aws_route_table" "rt_pub" {
+      ~ arn              = "arn:aws:ec2:us-east-1:568029449587:route-table/rtb-0f2904ef41ed86c42" -> (known after apply)
+      ~ id               = "rtb-0f2904ef41ed86c42" -> (known after apply)
+      ~ owner_id         = "568029449587" -> (known after apply)
+      ~ propagating_vgws = [] -> (known after apply)
+      - tags             = {} -> null
+      ~ tags_all         = {} -> (known after apply)
+      ~ vpc_id           = "vpc-03e059f056895e3d9" # forces replacement -> (known after apply) # forces replacement
+        # (1 unchanged attribute hidden)
+    }
+
+  # module.network.aws_route_table_association.rt_pub_sn_priv_az1 must be replaced
+-/+ resource "aws_route_table_association" "rt_pub_sn_priv_az1" {
+      ~ id             = "rtbassoc-054d3a857e1765f64" -> (known after apply)
+      ~ route_table_id = "rtb-0218b384d4850f1f5" -> (known after apply)
+      ~ subnet_id      = "subnet-050238114eeb08e7f" # forces replacement -> (known after apply) # forces replacement
+    }
+
+  # module.network.aws_route_table_association.rt_pub_sn_priv_az2 must be replaced
+-/+ resource "aws_route_table_association" "rt_pub_sn_priv_az2" {
+      ~ id             = "rtbassoc-0f881da05b514b989" -> (known after apply)
+      ~ route_table_id = "rtb-0218b384d4850f1f5" -> (known after apply)
+      ~ subnet_id      = "subnet-019e79d9df2f6dbb6" # forces replacement -> (known after apply) # forces replacement
+    }
+
+  # module.network.aws_route_table_association.rt_pub_sn_pub_az1 must be replaced
+-/+ resource "aws_route_table_association" "rt_pub_sn_pub_az1" {
+      ~ id             = "rtbassoc-0a528444a2db8f304" -> (known after apply)
+      ~ route_table_id = "rtb-0f2904ef41ed86c42" -> (known after apply)
+      ~ subnet_id      = "subnet-0bbe3d798280be3ff" # forces replacement -> (known after apply) # forces replacement
+    }
+
+  # module.network.aws_route_table_association.rt_pub_sn_pub_az2 must be replaced
+-/+ resource "aws_route_table_association" "rt_pub_sn_pub_az2" {
+      ~ id             = "rtbassoc-0ea69ba7a2115e426" -> (known after apply)
+      ~ route_table_id = "rtb-0f2904ef41ed86c42" -> (known after apply)
+      ~ subnet_id      = "subnet-0104562fb0a7b4276" # forces replacement -> (known after apply) # forces replacement
+    }
+
+  # module.network.aws_security_group.vpc_sg_priv must be replaced
+-/+ resource "aws_security_group" "vpc_sg_priv" {
+      ~ arn                    = "arn:aws:ec2:us-east-1:568029449587:security-group/sg-028ed6076941a930e" -> (known after apply)
+      ~ id                     = "sg-028ed6076941a930e" -> (known after apply)
+      ~ ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "10.0.0.0/16",
+                ]
+              - description      = ""
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+            },
+          + {
+              + cidr_blocks      = [
+                  + "30.0.0.0/16",
+                ]
+              + description      = ""
+              + from_port        = 0
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "-1"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 0
+            },
+        ]
+      ~ name                   = "terraform-20230426230955765300000001" -> (known after apply)
+      ~ name_prefix            = "terraform-" -> (known after apply)
+      ~ owner_id               = "568029449587" -> (known after apply)
+      - tags                   = {} -> null
+      ~ tags_all               = {} -> (known after apply)
+      ~ vpc_id                 = "vpc-03e059f056895e3d9" # forces replacement -> (known after apply) # forces replacement
+        # (3 unchanged attributes hidden)
+    }
+
+  # module.network.aws_security_group.vpc_sg_pub must be replaced
+-/+ resource "aws_security_group" "vpc_sg_pub" {
+      ~ arn                    = "arn:aws:ec2:us-east-1:568029449587:security-group/sg-0fbebee577f7ac180" -> (known after apply)
+      ~ id                     = "sg-0fbebee577f7ac180" -> (known after apply)
+      ~ ingress                = [
+          - {
+              - cidr_blocks      = [
+                  - "10.0.0.0/16",
+                ]
+              - description      = ""
+              - from_port        = 0
+              - ipv6_cidr_blocks = []
+              - prefix_list_ids  = []
+              - protocol         = "-1"
+              - security_groups  = []
+              - self             = false
+              - to_port          = 0
+            },
+          + {
+              + cidr_blocks      = [
+                  + "30.0.0.0/16",
+                ]
+              + description      = ""
+              + from_port        = 0
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "-1"
+              + security_groups  = []
+              + self             = false
+              + to_port          = 0
+            },
+            # (2 unchanged elements hidden)
+        ]
+      ~ name                   = "terraform-20230426230955773200000002" -> (known after apply)
+      ~ name_prefix            = "terraform-" -> (known after apply)
+      ~ owner_id               = "568029449587" -> (known after apply)
+      - tags                   = {} -> null
+      ~ tags_all               = {} -> (known after apply)
+      ~ vpc_id                 = "vpc-03e059f056895e3d9" # forces replacement -> (known after apply) # forces replacement
+        # (3 unchanged attributes hidden)
+    }
+
+  # module.network.aws_subnet.sn_priv_az1 must be replaced
+-/+ resource "aws_subnet" "sn_priv_az1" {
+      ~ arn                                            = "arn:aws:ec2:us-east-1:568029449587:subnet/subnet-050238114eeb08e7f" -> (known after apply)
+      ~ availability_zone_id                           = "use1-az4" -> (known after apply)
+      - enable_lni_at_device_index                     = 0 -> null
+      ~ id                                             = "subnet-050238114eeb08e7f" -> (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      - map_customer_owned_ip_on_launch                = false -> null
+      ~ owner_id                                       = "568029449587" -> (known after apply)
+      ~ private_dns_hostname_type_on_launch            = "ip-name" -> (known after apply)
+      - tags                                           = {} -> null
+      ~ tags_all                                       = {} -> (known after apply)
+      ~ vpc_id                                         = "vpc-03e059f056895e3d9" # forces replacement -> (known after apply) # forces replacement
+        # (8 unchanged attributes hidden)
+    }
+
+  # module.network.aws_subnet.sn_priv_az2 must be replaced
+-/+ resource "aws_subnet" "sn_priv_az2" {
+      ~ arn                                            = "arn:aws:ec2:us-east-1:568029449587:subnet/subnet-019e79d9df2f6dbb6" -> (known after apply)
+      ~ availability_zone_id                           = "use1-az1" -> (known after apply)
+      - enable_lni_at_device_index                     = 0 -> null
+      ~ id                                             = "subnet-019e79d9df2f6dbb6" -> (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      - map_customer_owned_ip_on_launch                = false -> null
+      ~ owner_id                                       = "568029449587" -> (known after apply)
+      ~ private_dns_hostname_type_on_launch            = "ip-name" -> (known after apply)
+      - tags                                           = {} -> null
+      ~ tags_all                                       = {} -> (known after apply)
+      ~ vpc_id                                         = "vpc-03e059f056895e3d9" # forces replacement -> (known after apply) # forces replacement
+        # (8 unchanged attributes hidden)
+    }
+
+  # module.network.aws_subnet.sn_pub_az1 must be replaced
+-/+ resource "aws_subnet" "sn_pub_az1" {
+      ~ arn                                            = "arn:aws:ec2:us-east-1:568029449587:subnet/subnet-0bbe3d798280be3ff" -> (known after apply)
+      ~ availability_zone_id                           = "use1-az4" -> (known after apply)
+      ~ cidr_block                                     = "10.0.1.0/24" -> "30.0.3.0/24" # forces replacement
+      - enable_lni_at_device_index                     = 0 -> null
+      ~ id                                             = "subnet-0bbe3d798280be3ff" -> (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      - map_customer_owned_ip_on_launch                = false -> null
+      ~ owner_id                                       = "568029449587" -> (known after apply)
+      ~ private_dns_hostname_type_on_launch            = "ip-name" -> (known after apply)
+      - tags                                           = {} -> null
+      ~ tags_all                                       = {} -> (known after apply)
+      ~ vpc_id                                         = "vpc-03e059f056895e3d9" # forces replacement -> (known after apply) # forces replacement
+        # (7 unchanged attributes hidden)
+    }
+
+  # module.network.aws_subnet.sn_pub_az2 must be replaced
+-/+ resource "aws_subnet" "sn_pub_az2" {
+      ~ arn                                            = "arn:aws:ec2:us-east-1:568029449587:subnet/subnet-0104562fb0a7b4276" -> (known after apply)
+      ~ availability_zone_id                           = "use1-az1" -> (known after apply)
+      ~ cidr_block                                     = "10.0.2.0/24" -> "30.0.3.0/24" # forces replacement
+      - enable_lni_at_device_index                     = 0 -> null
+      ~ id                                             = "subnet-0104562fb0a7b4276" -> (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      - map_customer_owned_ip_on_launch                = false -> null
+      ~ owner_id                                       = "568029449587" -> (known after apply)
+      ~ private_dns_hostname_type_on_launch            = "ip-name" -> (known after apply)
+      - tags                                           = {} -> null
+      ~ tags_all                                       = {} -> (known after apply)
+      ~ vpc_id                                         = "vpc-03e059f056895e3d9" # forces replacement -> (known after apply) # forces replacement
+        # (7 unchanged attributes hidden)
+    }
+
+  # module.network.aws_vpc.vpc must be replaced
+-/+ resource "aws_vpc" "vpc" {
+      ~ arn                                  = "arn:aws:ec2:us-east-1:568029449587:vpc/vpc-03e059f056895e3d9" -> (known after apply)
+      - assign_generated_ipv6_cidr_block     = false -> null
+      ~ cidr_block                           = "10.0.0.0/16" -> "30.0.0.0/16" # forces replacement
+      ~ default_network_acl_id               = "acl-008d39c3f75659d77" -> (known after apply)
+      ~ default_route_table_id               = "rtb-08b45d170aa5ffa01" -> (known after apply)
+      ~ default_security_group_id            = "sg-03eae98e9f2c4010b" -> (known after apply)
+      ~ dhcp_options_id                      = "dopt-033e5fc15266e9e44" -> (known after apply)
+      ~ enable_classiclink                   = false -> (known after apply)
+      ~ enable_classiclink_dns_support       = false -> (known after apply)
+      ~ enable_network_address_usage_metrics = false -> (known after apply)
+      ~ id                                   = "vpc-03e059f056895e3d9" -> (known after apply)
+      + ipv6_association_id                  = (known after apply)
+      + ipv6_cidr_block                      = (known after apply)
+      + ipv6_cidr_block_network_border_group = (known after apply)
+      - ipv6_netmask_length                  = 0 -> null
+      ~ main_route_table_id                  = "rtb-08b45d170aa5ffa01" -> (known after apply)
+      ~ owner_id                             = "568029449587" -> (known after apply)
+      - tags                                 = {} -> null
+      ~ tags_all                             = {} -> (known after apply)
+        # (3 unchanged attributes hidden)
+    }
+
+Plan: 21 to add, 1 to change, 21 to destroy.
+
+
+TERRAFORM APPLY:
+
+C:\Users\logonrmlocal\app-notifier\terraform>terraform apply
+module.network.aws_vpc.vpc: Refreshing state... [id=vpc-0836fba7dad088538]
+module.database.aws_db_parameter_group.rds_param_group: Refreshing state... [id=rds-param-group-caio]
+module.network.aws_subnet.sn_pub_az2: Refreshing state... [id=subnet-069a060dae5cb7e53]
+module.network.aws_subnet.sn_priv_az2: Refreshing state... [id=subnet-0b354fa4e863c876f]
+module.network.aws_subnet.sn_pub_az1: Refreshing state... [id=subnet-04ca0456b2eba610e]
+module.network.aws_security_group.vpc_sg_priv: Refreshing state... [id=sg-04313f1d2d04e5f88]
+module.network.aws_internet_gateway.igw: Refreshing state... [id=igw-065292f8fd0930481]
+module.network.aws_route_table.rt_priv: Refreshing state... [id=rtb-05e1c354d9e82aad8]
+module.network.aws_security_group.vpc_sg_pub: Refreshing state... [id=sg-06afe9c6f8a5b8462]
+module.compute.aws_lb_target_group.ec2_lb_tg: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:568029449587:targetgroup/ec2-lb-tg-caio/5d4cd780b41afc2b]
+module.network.aws_route_table_association.rt_pub_sn_priv_az2: Refreshing state... [id=rtbassoc-0b39f73382eb1a245]
+module.network.aws_route_table.rt_pub: Refreshing state... [id=rtb-0cf21c78950b8bbb4]
+module.compute.aws_lb.ec2_lb: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:568029449587:loadbalancer/app/ec2-lb-caio/8698f0b7bf4a478e]
+module.network.aws_route_table_association.rt_pub_sn_pub_az1: Refreshing state... [id=rtbassoc-0409c96742312d589]
+module.network.aws_route_table_association.rt_pub_sn_pub_az2: Refreshing state... [id=rtbassoc-04ceee71dd7550042]
+module.compute.aws_lb_listener.ec2_lb_listener: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:568029449587:listener/app/ec2-lb-caio/8698f0b7bf4a478e/138700b5fff96630]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
+following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # module.compute.data.template_file.user_data will be read during apply
+  # (config refers to values not yet known)
+ <= data "template_file" "user_data" {
+      + id       = (known after apply)
+      + rendered = (known after apply)
+      + template = <<-EOT
+            #!/bin/bash
+
+
+            # 1- Update/Install required OS packages
+            yum update -y
+            amazon-linux-extras install -y php7.2 epel
+            yum install -y httpd mysql php-mtdowling-jmespath-php php-xml telnet tree git
+
+
+            # 2- (Optional) Enable PHP to send AWS SNS events
+            # NOTE: If uncommented, more configs are required
+            # - Step 4: Deploy PHP app
+            # - Module Compute: compute.tf and vars.tf manifests
+
+            # 2.1- Config AWS SDK for PHP
+            # mkdir -p /opt/aws/sdk/php/
+            # cd /opt/aws/sdk/php/
+            # wget https://docs.aws.amazon.com/aws-sdk-php/v3/download/aws.zip
+            # unzip aws.zip
+
+            # 2.2- Config AWS Account
+            # mkdir -p /var/www/html/.aws/
+            # cat <<EOT >> /var/www/html/.aws/credentials
+            # [default]
+            # aws_access_key_id=12345
+            # aws_secret_access_key=12345
+            # aws_session_token=12345
+            # EOT
+
+
+            # 3- Config PHP app Connection to Database
+            cat <<EOT >> /var/www/config.php
+            <?php
+            define('DB_SERVER', '${rds_endpoint}');
+            define('DB_USERNAME', '${rds_dbuser}');
+            define('DB_PASSWORD', '${rds_dbpassword}');
+            define('DB_DATABASE', '${rds_dbname}');
+            ?>
+            EOT
+
+
+            # 4- Deploy PHP app
+            cd /tmp
+            git clone https://github.com/kledsonhugo/notifier
+            cp /tmp/notifier/app/*.php /var/www/html/
+            # mv /var/www/html/sendsms.php /var/www/html/index.php
+            rm -rf /tmp/notifier
+
+
+            # 5- Config Apache WebServer
+            usermod -a -G apache ec2-user
+            chown -R ec2-user:apache /var/www
+            chmod 2775 /var/www
+            find /var/www -type d -exec chmod 2775 {} \;
+            find /var/www -type f -exec chmod 0664 {} \;
+
+
+            # 6- Start Apache WebServer
+            systemctl enable httpd
+            service httpd restart
+        EOT
+      + vars     = {
+          + "rds_dbname"     = "rdsdbcaio"
+          + "rds_dbpassword" = "rdsdbadminpwd"
+          + "rds_dbuser"     = "rdsdbadmin"
+          + "rds_endpoint"   = (known after apply)
+        }
+    }
+
+  # module.compute.aws_autoscaling_group.ec2_asg will be created
+  + resource "aws_autoscaling_group" "ec2_asg" {
+      + arn                       = (known after apply)
+      + availability_zones        = (known after apply)
+      + default_cooldown          = (known after apply)
+      + desired_capacity          = 4
+      + force_delete              = false
+      + force_delete_warm_pool    = false
+      + health_check_grace_period = 300
+      + health_check_type         = (known after apply)
+      + id                        = (known after apply)
+      + max_size                  = 8
+      + metrics_granularity       = "1Minute"
+      + min_size                  = 2
+      + name                      = "ec2-asg-caio"
+      + name_prefix               = (known after apply)
+      + protect_from_scale_in     = false
+      + service_linked_role_arn   = (known after apply)
+      + target_group_arns         = [
+          + "arn:aws:elasticloadbalancing:us-east-1:568029449587:targetgroup/ec2-lb-tg-caio/5d4cd780b41afc2b",
+        ]
+      + vpc_zone_identifier       = [
+          + "subnet-04ca0456b2eba610e",
+          + "subnet-069a060dae5cb7e53",
+        ]
+      + wait_for_capacity_timeout = "10m"
+
+      + launch_template {
+          + id      = (known after apply)
+          + name    = (known after apply)
+          + version = "$Latest"
+        }
+    }
+
+  # module.compute.aws_launch_template.ec2_lt will be created
+  + resource "aws_launch_template" "ec2_lt" {
+      + arn                    = (known after apply)
+      + default_version        = (known after apply)
+      + id                     = (known after apply)
+      + image_id               = "ami-069aabeee6f53e7bf"
+      + instance_type          = "t2.micro"
+      + key_name               = "vockey"
+      + latest_version         = (known after apply)
+      + name                   = "ec2-lt-caio"
+      + name_prefix            = (known after apply)
+      + tags_all               = (known after apply)
+      + user_data              = (known after apply)
+      + vpc_security_group_ids = [
+          + "sg-06afe9c6f8a5b8462",
+        ]
+    }
+
+  # module.database.aws_db_instance.rds_dbinstance will be created
+  + resource "aws_db_instance" "rds_dbinstance" {
+      + address                               = (known after apply)
+      + allocated_storage                     = 20
+      + apply_immediately                     = false
+      + arn                                   = (known after apply)
+      + auto_minor_version_upgrade            = true
+      + availability_zone                     = (known after apply)
+      + backup_retention_period               = (known after apply)
+      + backup_window                         = (known after apply)
+      + ca_cert_identifier                    = (known after apply)
+      + character_set_name                    = (known after apply)
+      + copy_tags_to_snapshot                 = false
+      + db_name                               = "rdsdbcaio"
+      + db_subnet_group_name                  = "rds-sn-group-caio"
+      + delete_automated_backups              = true
+      + endpoint                              = (known after apply)
+      + engine                                = "mysql"
+      + engine_version                        = "8.0.23"
+      + engine_version_actual                 = (known after apply)
+      + hosted_zone_id                        = (known after apply)
+      + id                                    = (known after apply)
+      + identifier                            = "rds-caio"
+      + identifier_prefix                     = (known after apply)
+      + instance_class                        = "db.t2.micro"
+      + iops                                  = (known after apply)
+      + kms_key_id                            = (known after apply)
+      + latest_restorable_time                = (known after apply)
+      + license_model                         = (known after apply)
+      + listener_endpoint                     = (known after apply)
+      + maintenance_window                    = (known after apply)
+      + master_user_secret                    = (known after apply)
+      + master_user_secret_kms_key_id         = (known after apply)
+      + max_allocated_storage                 = 0
+      + monitoring_interval                   = 0
+      + monitoring_role_arn                   = (known after apply)
+      + multi_az                              = false
+      + name                                  = (known after apply)
+      + nchar_character_set_name              = (known after apply)
+      + network_type                          = (known after apply)
+      + option_group_name                     = (known after apply)
+      + parameter_group_name                  = "rds-param-group-caio"
+      + password                              = (sensitive value)
+      + performance_insights_enabled          = false
+      + performance_insights_kms_key_id       = (known after apply)
+      + performance_insights_retention_period = (known after apply)
+      + port                                  = (known after apply)
+      + publicly_accessible                   = false
+      + replica_mode                          = (known after apply)
+      + replicas                              = (known after apply)
+      + resource_id                           = (known after apply)
+      + skip_final_snapshot                   = true
+      + snapshot_identifier                   = (known after apply)
+      + status                                = (known after apply)
+      + storage_throughput                    = (known after apply)
+      + storage_type                          = "gp2"
+      + tags_all                              = (known after apply)
+      + timezone                              = (known after apply)
+      + username                              = "rdsdbadmin"
+      + vpc_security_group_ids                = [
+          + "sg-04313f1d2d04e5f88",
+        ]
+    }
+
+  # module.database.aws_db_subnet_group.rds_sn_group will be created
+  + resource "aws_db_subnet_group" "rds_sn_group" {
+      + arn                     = (known after apply)
+      + description             = "Managed by Terraform"
+      + id                      = (known after apply)
+      + name                    = "rds-sn-group-caio"
+      + name_prefix             = (known after apply)
+      + subnet_ids              = (known after apply)
+      + supported_network_types = (known after apply)
+      + tags_all                = (known after apply)
+    }
+
+  # module.network.aws_route_table_association.rt_pub_sn_priv_az1 will be created
+  + resource "aws_route_table_association" "rt_pub_sn_priv_az1" {
+      + id             = (known after apply)
+      + route_table_id = "rtb-05e1c354d9e82aad8"
+      + subnet_id      = (known after apply)
+    }
+
+  # module.network.aws_subnet.sn_priv_az1 will be created
+  + resource "aws_subnet" "sn_priv_az1" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-east-1a"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "30.0.3.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags_all                                       = (known after apply)
+      + vpc_id                                         = "vpc-0836fba7dad088538"
+    }
+
+Plan: 6 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+module.network.aws_subnet.sn_priv_az1: Creating...
+module.network.aws_subnet.sn_priv_az1: Creation complete after 1s [id=subnet-01506d9ebe019c4db]
+module.network.aws_route_table_association.rt_pub_sn_priv_az1: Creating...
+module.database.aws_db_subnet_group.rds_sn_group: Creating...
+module.network.aws_route_table_association.rt_pub_sn_priv_az1: Creation complete after 1s [id=rtbassoc-0530f51ff68513003]
+module.database.aws_db_subnet_group.rds_sn_group: Creation complete after 2s [id=rds-sn-group-caio]
+module.database.aws_db_instance.rds_dbinstance: Creating...
+module.database.aws_db_instance.rds_dbinstance: Still creating... [10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [6m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [6m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [6m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Creation complete after 6m22s [id=rds-caio]
+module.compute.data.template_file.user_data: Reading...
+module.compute.data.template_file.user_data: Read complete after 0s [id=584fc758fb534604d43c490ad7703f88959f1157aab13035e0ebafe2622c0aa8]
+module.compute.aws_launch_template.ec2_lt: Creating...
+module.compute.aws_launch_template.ec2_lt: Creation complete after 1s [id=lt-0ab2ad2fe49735864]
+module.compute.aws_autoscaling_group.ec2_asg: Creating...
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [10s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [20s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [30s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [40s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Creation complete after 45s [id=ec2-asg-caio]
+
+Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
+
+
+
+TERRAFORM SHOW:
+
+C:\Users\logonrmlocal\app-notifier\terraform>terraform show
+# module.compute.data.template_file.user_data:
+data "template_file" "user_data" {
+    id       = "584fc758fb534604d43c490ad7703f88959f1157aab13035e0ebafe2622c0aa8"
+    rendered = <<-EOT
+        #!/bin/bash
+
+
+        # 1- Update/Install required OS packages
+        yum update -y
+        amazon-linux-extras install -y php7.2 epel
+        yum install -y httpd mysql php-mtdowling-jmespath-php php-xml telnet tree git
+
+
+        # 2- (Optional) Enable PHP to send AWS SNS events
+        # NOTE: If uncommented, more configs are required
+        # - Step 4: Deploy PHP app
+        # - Module Compute: compute.tf and vars.tf manifests
+
+        # 2.1- Config AWS SDK for PHP
+        # mkdir -p /opt/aws/sdk/php/
+        # cd /opt/aws/sdk/php/
+        # wget https://docs.aws.amazon.com/aws-sdk-php/v3/download/aws.zip
+        # unzip aws.zip
+
+        # 2.2- Config AWS Account
+        # mkdir -p /var/www/html/.aws/
+        # cat <<EOT >> /var/www/html/.aws/credentials
+        # [default]
+        # aws_access_key_id=12345
+        # aws_secret_access_key=12345
+        # aws_session_token=12345
+        # EOT
+
+
+        # 3- Config PHP app Connection to Database
+        cat <<EOT >> /var/www/config.php
+        <?php
+        define('DB_SERVER', 'rds-caio.cvrrbtabwefe.us-east-1.rds.amazonaws.com:3306');
+        define('DB_USERNAME', 'rdsdbadmin');
+        define('DB_PASSWORD', 'rdsdbadminpwd');
+        define('DB_DATABASE', 'rdsdbcaio');
+        ?>
+        EOT
+
+
+        # 4- Deploy PHP app
+        cd /tmp
+        git clone https://github.com/kledsonhugo/notifier
+        cp /tmp/notifier/app/*.php /var/www/html/
+        # mv /var/www/html/sendsms.php /var/www/html/index.php
+        rm -rf /tmp/notifier
+
+
+        # 5- Config Apache WebServer
+        usermod -a -G apache ec2-user
+        chown -R ec2-user:apache /var/www
+        chmod 2775 /var/www
+        find /var/www -type d -exec chmod 2775 {} \;
+        find /var/www -type f -exec chmod 0664 {} \;
+
+
+        # 6- Start Apache WebServer
+        systemctl enable httpd
+        service httpd restart
+    EOT
+    template = <<-EOT
+        #!/bin/bash
+
+
+        # 1- Update/Install required OS packages
+        yum update -y
+        amazon-linux-extras install -y php7.2 epel
+        yum install -y httpd mysql php-mtdowling-jmespath-php php-xml telnet tree git
+
+
+        # 2- (Optional) Enable PHP to send AWS SNS events
+        # NOTE: If uncommented, more configs are required
+        # - Step 4: Deploy PHP app
+        # - Module Compute: compute.tf and vars.tf manifests
+
+        # 2.1- Config AWS SDK for PHP
+        # mkdir -p /opt/aws/sdk/php/
+        # cd /opt/aws/sdk/php/
+        # wget https://docs.aws.amazon.com/aws-sdk-php/v3/download/aws.zip
+        # unzip aws.zip
+
+        # 2.2- Config AWS Account
+        # mkdir -p /var/www/html/.aws/
+        # cat <<EOT >> /var/www/html/.aws/credentials
+        # [default]
+        # aws_access_key_id=12345
+        # aws_secret_access_key=12345
+        # aws_session_token=12345
+        # EOT
+
+
+        # 3- Config PHP app Connection to Database
+        cat <<EOT >> /var/www/config.php
+        <?php
+        define('DB_SERVER', '${rds_endpoint}');
+        define('DB_USERNAME', '${rds_dbuser}');
+        define('DB_PASSWORD', '${rds_dbpassword}');
+        define('DB_DATABASE', '${rds_dbname}');
+        ?>
+        EOT
+
+
+        # 4- Deploy PHP app
+        cd /tmp
+        git clone https://github.com/kledsonhugo/notifier
+        cp /tmp/notifier/app/*.php /var/www/html/
+        # mv /var/www/html/sendsms.php /var/www/html/index.php
+        rm -rf /tmp/notifier
+
+
+        # 5- Config Apache WebServer
+        usermod -a -G apache ec2-user
+        chown -R ec2-user:apache /var/www
+        chmod 2775 /var/www
+        find /var/www -type d -exec chmod 2775 {} \;
+        find /var/www -type f -exec chmod 0664 {} \;
+
+
+        # 6- Start Apache WebServer
+        systemctl enable httpd
+        service httpd restart
+    EOT
+    vars     = {
+        "rds_dbname"     = "rdsdbcaio"
+        "rds_dbpassword" = "rdsdbadminpwd"
+        "rds_dbuser"     = "rdsdbadmin"
+        "rds_endpoint"   = "rds-caio.cvrrbtabwefe.us-east-1.rds.amazonaws.com:3306"
+    }
+}
+
+# module.compute.aws_autoscaling_group.ec2_asg:
+resource "aws_autoscaling_group" "ec2_asg" {
+    arn                       = "arn:aws:autoscaling:us-east-1:568029449587:autoScalingGroup:1b510069-a1bb-49ba-b2f7-48ae7711db97:autoScalingGroupName/ec2-asg-caio"
+    availability_zones        = [
+        "us-east-1a",
+        "us-east-1c",
+    ]
+    capacity_rebalance        = false
+    default_cooldown          = 300
+    default_instance_warmup   = 0
+    desired_capacity          = 4
+    force_delete              = false
+    force_delete_warm_pool    = false
+    health_check_grace_period = 300
+    health_check_type         = "EC2"
+    id                        = "ec2-asg-caio"
+    max_instance_lifetime     = 0
+    max_size                  = 8
+    metrics_granularity       = "1Minute"
+    min_size                  = 2
+    name                      = "ec2-asg-caio"
+    protect_from_scale_in     = false
+    service_linked_role_arn   = "arn:aws:iam::568029449587:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+    target_group_arns         = [
+        "arn:aws:elasticloadbalancing:us-east-1:568029449587:targetgroup/ec2-lb-tg-caio/5d4cd780b41afc2b",
+    ]
+    vpc_zone_identifier       = [
+        "subnet-04ca0456b2eba610e",
+        "subnet-069a060dae5cb7e53",
+    ]
+    wait_for_capacity_timeout = "10m"
+
+    launch_template {
+        id      = "lt-0ab2ad2fe49735864"
+        name    = "ec2-lt-caio"
+        version = "$Latest"
+    }
+}
+
+# module.compute.aws_launch_template.ec2_lt:
+resource "aws_launch_template" "ec2_lt" {
+    arn                     = "arn:aws:ec2:us-east-1:568029449587:launch-template/lt-0ab2ad2fe49735864"
+    default_version         = 1
+    disable_api_stop        = false
+    disable_api_termination = false
+    id                      = "lt-0ab2ad2fe49735864"
+    image_id                = "ami-069aabeee6f53e7bf"
+    instance_type           = "t2.micro"
+    key_name                = "vockey"
+    latest_version          = 1
+    name                    = "ec2-lt-caio"
+    tags_all                = {}
+    user_data               = "IyEvYmluL2Jhc2gNCg0KDQojIDEtIFVwZGF0ZS9JbnN0YWxsIHJlcXVpcmVkIE9TIHBhY2thZ2VzDQp5dW0gdXBkYXRlIC15DQphbWF6b24tbGludXgtZXh0cmFzIGluc3RhbGwgLXkgcGhwNy4yIGVwZWwNCnl1bSBpbnN0YWxsIC15IGh0dHBkIG15c3FsIHBocC1tdGRvd2xpbmctam1lc3BhdGgtcGhwIHBocC14bWwgdGVsbmV0IHRyZWUgZ2l0DQoNCg0KIyAyLSAoT3B0aW9uYWwpIEVuYWJsZSBQSFAgdG8gc2VuZCBBV1MgU05TIGV2ZW50cw0KIyBOT1RFOiBJZiB1bmNvbW1lbnRlZCwgbW9yZSBjb25maWdzIGFyZSByZXF1aXJlZA0KIyAtIFN0ZXAgNDogRGVwbG95IFBIUCBhcHANCiMgLSBNb2R1bGUgQ29tcHV0ZTogY29tcHV0ZS50ZiBhbmQgdmFycy50ZiBtYW5pZmVzdHMNCg0KIyAyLjEtIENvbmZpZyBBV1MgU0RLIGZvciBQSFANCiMgbWtkaXIgLXAgL29wdC9hd3Mvc2RrL3BocC8NCiMgY2QgL29wdC9hd3Mvc2RrL3BocC8NCiMgd2dldCBodHRwczovL2RvY3MuYXdzLmFtYXpvbi5jb20vYXdzLXNkay1waHAvdjMvZG93bmxvYWQvYXdzLnppcA0KIyB1bnppcCBhd3MuemlwDQoNCiMgMi4yLSBDb25maWcgQVdTIEFjY291bnQNCiMgbWtkaXIgLXAgL3Zhci93d3cvaHRtbC8uYXdzLw0KIyBjYXQgPDxFT1QgPj4gL3Zhci93d3cvaHRtbC8uYXdzL2NyZWRlbnRpYWxzDQojIFtkZWZhdWx0XQ0KIyBhd3NfYWNjZXNzX2tleV9pZD0xMjM0NQ0KIyBhd3Nfc2VjcmV0X2FjY2Vzc19rZXk9MTIzNDUNCiMgYXdzX3Nlc3Npb25fdG9rZW49MTIzNDUNCiMgRU9UDQoNCg0KIyAzLSBDb25maWcgUEhQIGFwcCBDb25uZWN0aW9uIHRvIERhdGFiYXNlDQpjYXQgPDxFT1QgPj4gL3Zhci93d3cvY29uZmlnLnBocA0KPD9waHANCmRlZmluZSgnREJfU0VSVkVSJywgJ3Jkcy1jYWlvLmN2cnJidGFid2VmZS51cy1lYXN0LTEucmRzLmFtYXpvbmF3cy5jb206MzMwNicpOw0KZGVmaW5lKCdEQl9VU0VSTkFNRScsICdyZHNkYmFkbWluJyk7DQpkZWZpbmUoJ0RCX1BBU1NXT1JEJywgJ3Jkc2RiYWRtaW5wd2QnKTsNCmRlZmluZSgnREJfREFUQUJBU0UnLCAncmRzZGJjYWlvJyk7DQo/Pg0KRU9UDQoNCg0KIyA0LSBEZXBsb3kgUEhQIGFwcA0KY2QgL3RtcA0KZ2l0IGNsb25lIGh0dHBzOi8vZ2l0aHViLmNvbS9rbGVkc29uaHVnby9ub3RpZmllcg0KY3AgL3RtcC9ub3RpZmllci9hcHAvKi5waHAgL3Zhci93d3cvaHRtbC8NCiMgbXYgL3Zhci93d3cvaHRtbC9zZW5kc21zLnBocCAvdmFyL3d3dy9odG1sL2luZGV4LnBocA0Kcm0gLXJmIC90bXAvbm90aWZpZXINCg0KDQojIDUtIENvbmZpZyBBcGFjaGUgV2ViU2VydmVyDQp1c2VybW9kIC1hIC1HIGFwYWNoZSBlYzItdXNlcg0KY2hvd24gLVIgZWMyLXVzZXI6YXBhY2hlIC92YXIvd3d3DQpjaG1vZCAyNzc1IC92YXIvd3d3DQpmaW5kIC92YXIvd3d3IC10eXBlIGQgLWV4ZWMgY2htb2QgMjc3NSB7fSBcOw0KZmluZCAvdmFyL3d3dyAtdHlwZSBmIC1leGVjIGNobW9kIDA2NjQge30gXDsNCg0KDQojIDYtIFN0YXJ0IEFwYWNoZSBXZWJTZXJ2ZXINCnN5c3RlbWN0bCBlbmFibGUgaHR0cGQNCnNlcnZpY2UgaHR0cGQgcmVzdGFydA=="
+    vpc_security_group_ids  = [
+        "sg-06afe9c6f8a5b8462",
+    ]
+}
+
+# module.compute.aws_lb.ec2_lb:
+resource "aws_lb" "ec2_lb" {
+    arn                                         = "arn:aws:elasticloadbalancing:us-east-1:568029449587:loadbalancer/app/ec2-lb-caio/8698f0b7bf4a478e"
+    arn_suffix                                  = "app/ec2-lb-caio/8698f0b7bf4a478e"
+    desync_mitigation_mode                      = "defensive"
+    dns_name                                    = "ec2-lb-caio-249722182.us-east-1.elb.amazonaws.com"
+    drop_invalid_header_fields                  = false
+    enable_cross_zone_load_balancing            = true
+    enable_deletion_protection                  = false
+    enable_http2                                = true
+    enable_tls_version_and_cipher_suite_headers = false
+    enable_waf_fail_open                        = false
+    enable_xff_client_port                      = false
+    id                                          = "arn:aws:elasticloadbalancing:us-east-1:568029449587:loadbalancer/app/ec2-lb-caio/8698f0b7bf4a478e"
+    idle_timeout                                = 60
+    internal                                    = false
+    ip_address_type                             = "ipv4"
+    load_balancer_type                          = "application"
+    name                                        = "ec2-lb-caio"
+    preserve_host_header                        = false
+    security_groups                             = [
+        "sg-06afe9c6f8a5b8462",
+    ]
+    subnets                                     = [
+        "subnet-04ca0456b2eba610e",
+        "subnet-069a060dae5cb7e53",
+    ]
+    tags                                        = {}
+    tags_all                                    = {}
+    vpc_id                                      = "vpc-0836fba7dad088538"
+    xff_header_processing_mode                  = "append"
+    zone_id                                     = "Z35SXDOTRQ7X7K"
+
+    access_logs {
+        enabled = false
+    }
+
+    subnet_mapping {
+        subnet_id = "subnet-04ca0456b2eba610e"
+    }
+    subnet_mapping {
+        subnet_id = "subnet-069a060dae5cb7e53"
+    }
+}
+
+# module.compute.aws_lb_listener.ec2_lb_listener:
+resource "aws_lb_listener" "ec2_lb_listener" {
+    arn               = "arn:aws:elasticloadbalancing:us-east-1:568029449587:listener/app/ec2-lb-caio/8698f0b7bf4a478e/138700b5fff96630"
+    id                = "arn:aws:elasticloadbalancing:us-east-1:568029449587:listener/app/ec2-lb-caio/8698f0b7bf4a478e/138700b5fff96630"
+    load_balancer_arn = "arn:aws:elasticloadbalancing:us-east-1:568029449587:loadbalancer/app/ec2-lb-caio/8698f0b7bf4a478e"
+    port              = 80
+    protocol          = "HTTP"
+    tags              = {}
+    tags_all          = {}
+
+    default_action {
+        order            = 1
+        target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:568029449587:targetgroup/ec2-lb-tg-caio/5d4cd780b41afc2b"
+        type             = "forward"
+    }
+}
+
+# module.compute.aws_lb_target_group.ec2_lb_tg:
+resource "aws_lb_target_group" "ec2_lb_tg" {
+    arn                                = "arn:aws:elasticloadbalancing:us-east-1:568029449587:targetgroup/ec2-lb-tg-caio/5d4cd780b41afc2b"
+    arn_suffix                         = "targetgroup/ec2-lb-tg-caio/5d4cd780b41afc2b"
+    connection_termination             = false
+    deregistration_delay               = "300"
+    id                                 = "arn:aws:elasticloadbalancing:us-east-1:568029449587:targetgroup/ec2-lb-tg-caio/5d4cd780b41afc2b"
+    ip_address_type                    = "ipv4"
+    lambda_multi_value_headers_enabled = false
+    load_balancing_algorithm_type      = "round_robin"
+    load_balancing_cross_zone_enabled  = "use_load_balancer_configuration"
+    name                               = "ec2-lb-tg-caio"
+    port                               = 80
+    protocol                           = "HTTP"
+    protocol_version                   = "HTTP1"
+    proxy_protocol_v2                  = false
+    slow_start                         = 0
+    tags                               = {}
+    tags_all                           = {}
+    target_type                        = "instance"
+    vpc_id                             = "vpc-0836fba7dad088538"
+
+    health_check {
+        enabled             = true
+        healthy_threshold   = 5
+        interval            = 30
+        matcher             = "200"
+        path                = "/"
+        port                = "traffic-port"
+        protocol            = "HTTP"
+        timeout             = 5
+        unhealthy_threshold = 2
+    }
+
+    stickiness {
+        cookie_duration = 86400
+        enabled         = false
+        type            = "lb_cookie"
+    }
+
+    target_failover {}
+}
+# module.database.aws_db_instance.rds_dbinstance:
+resource "aws_db_instance" "rds_dbinstance" {
+    address                               = "rds-caio.cvrrbtabwefe.us-east-1.rds.amazonaws.com"
+    allocated_storage                     = 20
+    apply_immediately                     = false
+    arn                                   = "arn:aws:rds:us-east-1:568029449587:db:rds-caio"
+    auto_minor_version_upgrade            = true
+    availability_zone                     = "us-east-1a"
+    backup_retention_period               = 0
+    backup_window                         = "04:21-04:51"
+    ca_cert_identifier                    = "rds-ca-2019"
+    copy_tags_to_snapshot                 = false
+    customer_owned_ip_enabled             = false
+    db_name                               = "rdsdbcaio"
+    db_subnet_group_name                  = "rds-sn-group-caio"
+    delete_automated_backups              = true
+    deletion_protection                   = false
+    endpoint                              = "rds-caio.cvrrbtabwefe.us-east-1.rds.amazonaws.com:3306"
+    engine                                = "mysql"
+    engine_version                        = "8.0.23"
+    engine_version_actual                 = "8.0.23"
+    hosted_zone_id                        = "Z2R2ITUGPM61AM"
+    iam_database_authentication_enabled   = false
+    id                                    = "rds-caio"
+    identifier                            = "rds-caio"
+    instance_class                        = "db.t2.micro"
+    iops                                  = 0
+    license_model                         = "general-public-license"
+    listener_endpoint                     = []
+    maintenance_window                    = "tue:10:28-tue:10:58"
+    master_user_secret                    = []
+    max_allocated_storage                 = 0
+    monitoring_interval                   = 0
+    multi_az                              = false
+    name                                  = "rdsdbcaio"
+    network_type                          = "IPV4"
+    option_group_name                     = "default:mysql-8-0"
+    parameter_group_name                  = "rds-param-group-caio"
+    password                              = (sensitive value)
+    performance_insights_enabled          = false
+    performance_insights_retention_period = 0
+    port                                  = 3306
+    publicly_accessible                   = false
+    replicas                              = []
+    resource_id                           = "db-AFBWZAWVOQX5LCMTNRHGL5BRPQ"
+    skip_final_snapshot                   = true
+    status                                = "available"
+    storage_encrypted                     = false
+    storage_throughput                    = 0
+    storage_type                          = "gp2"
+    tags_all                              = {}
+    username                              = "rdsdbadmin"
+    vpc_security_group_ids                = [
+        "sg-04313f1d2d04e5f88",
+    ]
+}
+
+# module.database.aws_db_parameter_group.rds_param_group:
+resource "aws_db_parameter_group" "rds_param_group" {
+    arn         = "arn:aws:rds:us-east-1:568029449587:pg:rds-param-group-caio"
+    description = "Managed by Terraform"
+    family      = "mysql8.0"
+    id          = "rds-param-group-caio"
+    name        = "rds-param-group-caio"
+    tags        = {}
+    tags_all    = {}
+
+    parameter {
+        apply_method = "immediate"
+        name         = "character_set_database"
+        value        = "utf8"
+    }
+    parameter {
+        apply_method = "immediate"
+        name         = "character_set_server"
+        value        = "utf8"
+    }
+}
+
+# module.database.aws_db_subnet_group.rds_sn_group:
+resource "aws_db_subnet_group" "rds_sn_group" {
+    arn                     = "arn:aws:rds:us-east-1:568029449587:subgrp:rds-sn-group-caio"
+    description             = "Managed by Terraform"
+    id                      = "rds-sn-group-caio"
+    name                    = "rds-sn-group-caio"
+    subnet_ids              = [
+        "subnet-01506d9ebe019c4db",
+        "subnet-0b354fa4e863c876f",
+    ]
+    supported_network_types = [
+        "IPV4",
+    ]
+    tags_all                = {}
+}
+# module.network.aws_internet_gateway.igw:
+resource "aws_internet_gateway" "igw" {
+    arn      = "arn:aws:ec2:us-east-1:568029449587:internet-gateway/igw-065292f8fd0930481"
+    id       = "igw-065292f8fd0930481"
+    owner_id = "568029449587"
+    tags     = {}
+    tags_all = {}
+    vpc_id   = "vpc-0836fba7dad088538"
+}
+
+# module.network.aws_route_table.rt_priv:
+resource "aws_route_table" "rt_priv" {
+    arn              = "arn:aws:ec2:us-east-1:568029449587:route-table/rtb-05e1c354d9e82aad8"
+    id               = "rtb-05e1c354d9e82aad8"
+    owner_id         = "568029449587"
+    propagating_vgws = []
+    route            = []
+    tags             = {}
+    tags_all         = {}
+    vpc_id           = "vpc-0836fba7dad088538"
+}
+
+# module.network.aws_route_table.rt_pub:
+resource "aws_route_table" "rt_pub" {
+    arn              = "arn:aws:ec2:us-east-1:568029449587:route-table/rtb-0cf21c78950b8bbb4"
+    id               = "rtb-0cf21c78950b8bbb4"
+    owner_id         = "568029449587"
+    propagating_vgws = []
+    route            = [
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "0.0.0.0/0"
+            core_network_arn           = ""
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = "igw-065292f8fd0930481"
+            instance_id                = ""
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = ""
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = ""
+        },
+    ]
+    tags             = {}
+    tags_all         = {}
+    vpc_id           = "vpc-0836fba7dad088538"
+}
+
+# module.network.aws_route_table_association.rt_pub_sn_priv_az1:
+resource "aws_route_table_association" "rt_pub_sn_priv_az1" {
+    id             = "rtbassoc-0530f51ff68513003"
+    route_table_id = "rtb-05e1c354d9e82aad8"
+    subnet_id      = "subnet-01506d9ebe019c4db"
+}
+
+# module.network.aws_route_table_association.rt_pub_sn_priv_az2:
+resource "aws_route_table_association" "rt_pub_sn_priv_az2" {
+    id             = "rtbassoc-0b39f73382eb1a245"
+    route_table_id = "rtb-05e1c354d9e82aad8"
+    subnet_id      = "subnet-0b354fa4e863c876f"
+}
+
+# module.network.aws_route_table_association.rt_pub_sn_pub_az1:
+resource "aws_route_table_association" "rt_pub_sn_pub_az1" {
+    id             = "rtbassoc-0409c96742312d589"
+    route_table_id = "rtb-0cf21c78950b8bbb4"
+    subnet_id      = "subnet-04ca0456b2eba610e"
+}
+
+# module.network.aws_route_table_association.rt_pub_sn_pub_az2:
+resource "aws_route_table_association" "rt_pub_sn_pub_az2" {
+    id             = "rtbassoc-04ceee71dd7550042"
+    route_table_id = "rtb-0cf21c78950b8bbb4"
+    subnet_id      = "subnet-069a060dae5cb7e53"
+}
+
+# module.network.aws_security_group.vpc_sg_priv:
+resource "aws_security_group" "vpc_sg_priv" {
+    arn                    = "arn:aws:ec2:us-east-1:568029449587:security-group/sg-04313f1d2d04e5f88"
+    description            = "Managed by Terraform"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = ""
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-04313f1d2d04e5f88"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "30.0.0.0/16",
+            ]
+            description      = ""
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    name                   = "terraform-20230427003142482500000001"
+    name_prefix            = "terraform-"
+    owner_id               = "568029449587"
+    revoke_rules_on_delete = false
+    tags                   = {}
+    tags_all               = {}
+    vpc_id                 = "vpc-0836fba7dad088538"
+}
+
+# module.network.aws_security_group.vpc_sg_pub:
+resource "aws_security_group" "vpc_sg_pub" {
+    arn                    = "arn:aws:ec2:us-east-1:568029449587:security-group/sg-06afe9c6f8a5b8462"
+    description            = "Managed by Terraform"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = ""
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-06afe9c6f8a5b8462"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = ""
+            from_port        = 22
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 22
+        },
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = ""
+            from_port        = 80
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 80
+        },
+        {
+            cidr_blocks      = [
+                "30.0.0.0/16",
+            ]
+            description      = ""
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    name                   = "terraform-20230427003142491200000002"
+    name_prefix            = "terraform-"
+    owner_id               = "568029449587"
+    revoke_rules_on_delete = false
+    tags                   = {}
+    tags_all               = {}
+    vpc_id                 = "vpc-0836fba7dad088538"
+}
+
+# module.network.aws_subnet.sn_priv_az1:
+resource "aws_subnet" "sn_priv_az1" {
+    arn                                            = "arn:aws:ec2:us-east-1:568029449587:subnet/subnet-01506d9ebe019c4db"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-1a"
+    availability_zone_id                           = "use1-az4"
+    cidr_block                                     = "30.0.3.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-01506d9ebe019c4db"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "568029449587"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags_all                                       = {}
+    vpc_id                                         = "vpc-0836fba7dad088538"
+}
+
+# module.network.aws_subnet.sn_priv_az2:
+resource "aws_subnet" "sn_priv_az2" {
+    arn                                            = "arn:aws:ec2:us-east-1:568029449587:subnet/subnet-0b354fa4e863c876f"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-1c"
+    availability_zone_id                           = "use1-az1"
+    cidr_block                                     = "30.0.4.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-0b354fa4e863c876f"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "568029449587"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {}
+    tags_all                                       = {}
+    vpc_id                                         = "vpc-0836fba7dad088538"
+}
+
+# module.network.aws_subnet.sn_pub_az1:
+resource "aws_subnet" "sn_pub_az1" {
+    arn                                            = "arn:aws:ec2:us-east-1:568029449587:subnet/subnet-04ca0456b2eba610e"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-1a"
+    availability_zone_id                           = "use1-az4"
+    cidr_block                                     = "30.0.1.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-04ca0456b2eba610e"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = true
+    owner_id                                       = "568029449587"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {}
+    tags_all                                       = {}
+    vpc_id                                         = "vpc-0836fba7dad088538"
+}
+
+# module.network.aws_subnet.sn_pub_az2:
+resource "aws_subnet" "sn_pub_az2" {
+    arn                                            = "arn:aws:ec2:us-east-1:568029449587:subnet/subnet-069a060dae5cb7e53"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-1c"
+    availability_zone_id                           = "use1-az1"
+    cidr_block                                     = "30.0.2.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-069a060dae5cb7e53"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = true
+    owner_id                                       = "568029449587"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {}
+    tags_all                                       = {}
+    vpc_id                                         = "vpc-0836fba7dad088538"
+}
+
+# module.network.aws_vpc.vpc:
+resource "aws_vpc" "vpc" {
+    arn                                  = "arn:aws:ec2:us-east-1:568029449587:vpc/vpc-0836fba7dad088538"
+    assign_generated_ipv6_cidr_block     = false
+    cidr_block                           = "30.0.0.0/16"
+    default_network_acl_id               = "acl-0a9e8c049fcd1c628"
+    default_route_table_id               = "rtb-0d5a41838dfcf7cb0"
+    default_security_group_id            = "sg-00d2ddf18572a30ac"
+    dhcp_options_id                      = "dopt-033e5fc15266e9e44"
+    enable_classiclink                   = false
+    enable_classiclink_dns_support       = false
+    enable_dns_hostnames                 = true
+    enable_dns_support                   = true
+    enable_network_address_usage_metrics = false
+    id                                   = "vpc-0836fba7dad088538"
+    instance_tenancy                     = "default"
+    ipv6_netmask_length                  = 0
+    main_route_table_id                  = "rtb-0d5a41838dfcf7cb0"
+    owner_id                             = "568029449587"
+    tags                                 = {}
+    tags_all                             = {}
+
+}
+
