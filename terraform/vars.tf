@@ -2,7 +2,7 @@
 
 variable "vpc_cidr" {
     type    = string
-    default = "10.0.0.0/16"
+    default = "30.0.0.0/16"
 }
 
 variable "vpc_az1" {
@@ -17,22 +17,22 @@ variable "vpc_az2" {
 
 variable "vpc_sn_pub_az1_cidr" {
     type    = string
-    default = "10.0.1.0/24"
+    default = "30.0.1.0/24"
 }
 
 variable "vpc_sn_pub_az2_cidr" {
     type    = string
-    default = "10.0.2.0/24"
+    default = "30.0.2.0/24"
 }
 
 variable "vpc_sn_priv_az1_cidr" {
     type    = string
-    default = "10.0.3.0/24"
+    default = "30.0.3.0/24"
 }
 
 variable "vpc_sn_priv_az2_cidr" {
     type    = string
-    default = "10.0.4.0/24"
+    default = "30.0.4.0/24"
 }
 
 
@@ -40,22 +40,22 @@ variable "vpc_sn_priv_az2_cidr" {
 
 variable "rds_identifier" {
     type    = string
-    default = "rds-notifier"
+    default = "rds-gabriel"
 }
 
 variable "rds_sn_group_name" {
     type    = string
-    default = "rds-sn-group-notifier"
+    default = "rds-sn-group-gabriel"
 }
 
 variable "rds_param_group_name" {
     type    = string
-    default = "rds-param-group-notifier"
+    default = "rds-param-group-gabriel"
 }
 
 variable "rds_dbname" {
     type    = string
-    default = "rdsdbnotifier"
+    default = "rdsdbgabriel"
 }
 
 variable "rds_dbuser" {
@@ -73,7 +73,7 @@ variable "rds_dbpassword" {
 
 variable "ec2_lt_name" {
     type    = string
-    default = "ec2-lt-notifier"
+    default = "ec2-lt-gabriel"
 }
 
 variable "ec2_lt_ami" {
@@ -94,17 +94,17 @@ variable "ec2_lt_ssh_key_name" {
 
 variable "ec2_lb_name" {
     type    = string
-    default = "ec2-lb-notifier"
+    default = "ec2-lb-gabriel"
 }
 
 variable "ec2_lb_tg_name" {
     type    = string
-    default = "ec2-lb-tg-notifier"
+    default = "ec2-lb-tg-gabriel"
 }
 
 variable "ec2_asg_name" {
     type    = string
-    default = "ec2-asg-notifier"
+    default = "ec2-asg-gabriel"
 }
 
 variable "ec2_asg_desired_capacity" {

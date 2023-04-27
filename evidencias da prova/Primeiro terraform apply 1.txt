@@ -1,0 +1,110 @@
+D:\CheckPoint3-IAC-Gabriel\app-notifier\terraform>terraform apply -auto-approve -input=false tfplan
+module.network.aws_vpc.vpc: Creating...
+module.database.aws_db_parameter_group.rds_param_group: Creating...
+module.database.aws_db_parameter_group.rds_param_group: Creation complete after 4s [id=rds-param-group-notifier]
+module.network.aws_vpc.vpc: Still creating... [10s elapsed]
+module.network.aws_vpc.vpc: Creation complete after 14s [id=vpc-040204aa9583d2354]
+module.network.aws_internet_gateway.igw: Creating...
+module.network.aws_subnet.sn_pub_az1: Creating...
+module.network.aws_subnet.sn_priv_az2: Creating...
+module.network.aws_subnet.sn_priv_az1: Creating...
+module.compute.aws_lb_target_group.ec2_lb_tg: Creating...
+module.network.aws_security_group.vpc_sg_priv: Creating...
+module.network.aws_subnet.sn_pub_az2: Creating...
+module.network.aws_route_table.rt_priv: Creating...
+module.network.aws_security_group.vpc_sg_pub: Creating...
+module.network.aws_internet_gateway.igw: Creation complete after 1s [id=igw-052c5312a98b9adf2]
+module.network.aws_route_table.rt_pub: Creating...
+module.network.aws_subnet.sn_priv_az2: Creation complete after 1s [id=subnet-0893683a22b943228]
+module.network.aws_subnet.sn_priv_az1: Creation complete after 2s [id=subnet-03a779ff76df9cbe5]
+module.database.aws_db_subnet_group.rds_sn_group: Creating...
+module.network.aws_route_table.rt_priv: Creation complete after 2s [id=rtb-01b0fff8191494d0e]
+module.network.aws_route_table_association.rt_pub_sn_priv_az2: Creating...
+module.network.aws_route_table_association.rt_pub_sn_priv_az1: Creating...
+module.network.aws_route_table_association.rt_pub_sn_priv_az1: Creation complete after 0s [id=rtbassoc-0b630761c419c8a04]
+module.compute.aws_lb_target_group.ec2_lb_tg: Creation complete after 3s [id=arn:aws:elasticloadbalancing:us-east-1:658168047556:targetgroup/ec2-lb-tg-notifier/957093cee50891ca]
+module.network.aws_route_table_association.rt_pub_sn_priv_az2: Creation complete after 1s [id=rtbassoc-0e56ab4129ee45bb3]
+module.database.aws_db_subnet_group.rds_sn_group: Creation complete after 1s [id=rds-sn-group-notifier]
+module.network.aws_route_table.rt_pub: Creation complete after 2s [id=rtb-0ad756afca1de7e57]
+module.network.aws_security_group.vpc_sg_pub: Creation complete after 4s [id=sg-0db254221fa51e9cf]
+module.network.aws_security_group.vpc_sg_priv: Creation complete after 4s [id=sg-0aab6ed74451d3103]
+module.database.aws_db_instance.rds_dbinstance: Creating...
+module.network.aws_subnet.sn_pub_az2: Still creating... [10s elapsed]
+module.network.aws_subnet.sn_pub_az1: Still creating... [10s elapsed]
+module.network.aws_subnet.sn_pub_az1: Creation complete after 12s [id=subnet-03adfccb184504618]
+module.network.aws_route_table_association.rt_pub_sn_pub_az1: Creating...
+module.network.aws_subnet.sn_pub_az2: Creation complete after 12s [id=subnet-03920048d99acac39]
+module.network.aws_route_table_association.rt_pub_sn_pub_az2: Creating...
+module.compute.aws_lb.ec2_lb: Creating...
+module.network.aws_route_table_association.rt_pub_sn_pub_az2: Creation complete after 1s [id=rtbassoc-017433a06c2c215dc]
+module.network.aws_route_table_association.rt_pub_sn_pub_az1: Creation complete after 1s [id=rtbassoc-02e7da5a6a53e7fdc]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [10s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [20s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [30s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [40s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [50s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m0s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [1m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m10s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [1m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m20s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [1m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m30s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [1m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m40s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [1m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [1m50s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [1m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m0s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [2m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m10s elapsed]
+module.compute.aws_lb.ec2_lb: Still creating... [2m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m20s elapsed]
+module.compute.aws_lb.ec2_lb: Creation complete after 2m14s [id=arn:aws:elasticloadbalancing:us-east-1:658168047556:loadbalancer/app/ec2-lb-notifier/7766eb4828fa6849]
+module.compute.aws_lb_listener.ec2_lb_listener: Creating...
+module.compute.aws_lb_listener.ec2_lb_listener: Creation complete after 1s [id=arn:aws:elasticloadbalancing:us-east-1:658168047556:listener/app/ec2-lb-notifier/7766eb4828fa6849/a8e6fe8fb3dfa5c3]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [2m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [3m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [4m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [5m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [6m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still creating... [6m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Creation complete after 6m11s [id=rds-notifier]
+module.compute.data.template_file.user_data: Reading...
+module.compute.data.template_file.user_data: Read complete after 0s [id=f86b2d81501d0749a0a8260691d6d76c150600b2048bda5e9d71ab7b3b712269]
+module.compute.aws_launch_template.ec2_lt: Creating...
+module.compute.aws_launch_template.ec2_lt: Creation complete after 2s [id=lt-029e31ffc632851a8]
+module.compute.aws_autoscaling_group.ec2_asg: Creating...
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [10s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [20s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [30s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [40s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [50s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [1m0s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [1m10s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still creating... [1m20s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Creation complete after 1m29s [id=ec2-asg-notifier]
+
+Apply complete! Resources: 22 added, 0 changed, 0 destroyed.
