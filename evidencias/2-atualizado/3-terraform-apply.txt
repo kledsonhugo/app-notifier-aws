@@ -1,0 +1,118 @@
+terraform apply -auto-approve tfplan
+
+module.network.aws_route_table_association.rt_pub_sn_pub_az1: Destroying... [id=rtbassoc-046e330591742c7f1]
+module.network.aws_route_table_association.rt_pub_sn_priv_az1: Destroying... [id=rtbassoc-0d35c635fb21d00d1]
+module.network.aws_route_table_association.rt_pub_sn_priv_az2: Destroying... [id=rtbassoc-0b5230984e7dddc5f]
+module.network.aws_route_table_association.rt_pub_sn_pub_az2: Destroying... [id=rtbassoc-0d32ca68b08bcc159]
+module.compute.aws_lb_listener.ec2_lb_listener: Destroying... [id=arn:aws:elasticloadbalancing:us-east-1:331343439662:listener/app/ec2-lb-notifier/1cfd1d140801d828/1fb77d1b6fb2b881]
+module.compute.aws_autoscaling_group.ec2_asg: Destroying... [id=ec2-asg-notifier]
+module.compute.aws_lb_listener.ec2_lb_listener: Destruction complete after 1s
+module.compute.aws_lb.ec2_lb: Destroying... [id=arn:aws:elasticloadbalancing:us-east-1:331343439662:loadbalancer/app/ec2-lb-notifier/1cfd1d140801d828]
+module.network.aws_route_table_association.rt_pub_sn_priv_az1: Destruction complete after 1s
+module.network.aws_route_table_association.rt_pub_sn_pub_az1: Destruction complete after 1s
+module.network.aws_route_table_association.rt_pub_sn_pub_az2: Destruction complete after 1s
+module.network.aws_route_table.rt_pub: Destroying... [id=rtb-0065e1d9b432a7712]
+module.network.aws_route_table_association.rt_pub_sn_priv_az2: Destruction complete after 1s
+module.network.aws_route_table.rt_priv: Destroying... [id=rtb-023d5f7ec8ef0ab12]
+module.network.aws_route_table.rt_priv: Destruction complete after 2s
+module.network.aws_route_table.rt_pub: Destruction complete after 2s
+module.compute.aws_lb.ec2_lb: Destruction complete after 2s
+module.compute.aws_autoscaling_group.ec2_asg: Still destroying... [id=ec2-asg-notifier, 10s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still destroying... [id=ec2-asg-notifier, 20s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still destroying... [id=ec2-asg-notifier, 30s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still destroying... [id=ec2-asg-notifier, 40s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still destroying... [id=ec2-asg-notifier, 50s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still destroying... [id=ec2-asg-notifier, 1m0s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still destroying... [id=ec2-asg-notifier, 1m10s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still destroying... [id=ec2-asg-notifier, 1m20s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Still destroying... [id=ec2-asg-notifier, 1m30s elapsed]
+module.compute.aws_autoscaling_group.ec2_asg: Destruction complete after 1m31s
+module.network.aws_subnet.sn_pub_az1: Destroying... [id=subnet-0df54414e9949aa6c]
+module.network.aws_subnet.sn_pub_az2: Destroying... [id=subnet-08b4625fcf1cea5d0]
+module.compute.aws_lb_target_group.ec2_lb_tg: Destroying... [id=arn:aws:elasticloadbalancing:us-east-1:331343439662:targetgroup/ec2-lb-tg-notifier/cec408ced668e1a0]
+module.compute.aws_launch_template.ec2_lt: Destroying... [id=lt-034eea8ca4e4145da]
+module.compute.aws_lb_target_group.ec2_lb_tg: Destruction complete after 0s
+module.compute.aws_launch_template.ec2_lt: Destruction complete after 1s
+module.network.aws_security_group.vpc_sg_pub: Destroying... [id=sg-0d3329681ca6ed094]
+module.database.aws_db_instance.rds_dbinstance: Destroying... [id=rds-notifier]
+module.network.aws_subnet.sn_pub_az1: Destruction complete after 1s
+module.network.aws_subnet.sn_pub_az2: Destruction complete after 2s
+module.network.aws_security_group.vpc_sg_pub: Destruction complete after 1s
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 1m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 1m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 1m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 1m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 1m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 1m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 2m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 2m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 2m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 2m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 2m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 2m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 3m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 3m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 3m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 3m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 3m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 3m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 4m0s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 4m10s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 4m20s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 4m30s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 4m40s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Still destroying... [id=rds-notifier, 4m50s elapsed]
+module.database.aws_db_instance.rds_dbinstance: Destruction complete after 4m57s
+module.database.aws_db_subnet_group.rds_sn_group: Destroying... [id=rds-sn-group-notifier]
+module.database.aws_db_parameter_group.rds_param_group: Destroying... [id=rds-param-group-notifier]
+module.network.aws_security_group.vpc_sg_priv: Destroying... [id=sg-0be8d2e9d9eaf0b0d]
+module.database.aws_db_subnet_group.rds_sn_group: Destruction complete after 1s
+module.network.aws_subnet.sn_priv_az2: Destroying... [id=subnet-00a16e76bd5a5e0c8]
+module.network.aws_subnet.sn_priv_az1: Destroying... [id=subnet-06f82ec434dd38366]
+module.database.aws_db_parameter_group.rds_param_group: Destruction complete after 1s
+module.database.aws_db_parameter_group.rds_param_group: Creating...
+module.network.aws_subnet.sn_priv_az2: Destruction complete after 1s
+module.network.aws_security_group.vpc_sg_priv: Destruction complete after 2s
+module.network.aws_subnet.sn_priv_az1: Destruction complete after 2s
+module.network.aws_vpc.vpc: Destroying... [id=vpc-0a1c121b9b0b9f5b4]
+module.database.aws_db_parameter_group.rds_param_group: Creation complete after 5s [id=rds-param-group-kevin]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 10s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 20s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 30s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 40s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 50s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 1m0s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 1m10s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 1m20s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 1m30s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 1m40s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 1m50s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 2m0s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 2m10s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 2m20s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 2m30s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 2m40s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 2m50s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 3m0s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 3m10s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 3m20s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 3m30s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 3m40s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 3m50s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 4m0s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 4m10s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 4m20s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 4m30s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 4m40s elapsed]
+module.network.aws_vpc.vpc: Still destroying... [id=vpc-0a1c121b9b0b9f5b4, 4m50s elapsed]
+╷
+│ Error: deleting EC2 VPC (vpc-0a1c121b9b0b9f5b4): DependencyViolation: The vpc 'vpc-0a1c121b9b0b9f5b4' has dependencies and cannot be deleted.
+│ 	status code: 400, request id: 1e7c0b2f-4a2f-4b5f-b1f8-e59845e27e26
+│ 
+│ 
+╵
