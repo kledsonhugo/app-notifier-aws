@@ -7,6 +7,7 @@
 ```
 
 
+
     PS C:\Users\nader.souza\Desktop\app-notifier\terraform> terraform init
 
     Initializing the backend...

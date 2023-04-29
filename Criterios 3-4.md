@@ -20,6 +20,7 @@ Terraform will perform the following actions:
       + rendered = (known after apply)
       + template = <<-EOT
             #!/bin/bash
+            
 
 
             # 1- Update/Install required OS packages
