@@ -35,9 +35,9 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
     - Number of private subnets : **2**
     - Customize subnets CIDR blocks
       - Public subnet CIDR block in us-east-1a : **30.0.1.0/24**
-      - Public subnet CIDR block in us-east-1c : **30.0.3.0/24**
+      - Public subnet CIDR block in us-east-1b : **30.0.3.0/24**
       - Private subnet CIDR block in us-east-1a : **30.0.2.0/24**
-      - Private subnet CIDR block in us-east-1c : **30.0.4.0/24**
+      - Private subnet CIDR block in us-east-1b : **30.0.4.0/24**
     - NAT gateways : **None**
     - VPC endpoints : **None**
 
@@ -50,12 +50,7 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
 05. Validate if all VPC resources were created.
 
     > **Note**
-    > Check carefully this step prior to proceed. This is step is a requirements for all following steps. In case of questions/issues, don´t proceed, stop and ask for help.
-      - Following resources should be created:
-        - 1 VPC
-        - 4 subnets
-        - 1 Internet Gateway
-        - 3 routing tables
+    > Check carefully this step prior to proceed. This step is a requirement for all following steps. In case of questions/issues, don´t proceed, stop and ask for help.
       
       <br>
 
@@ -110,8 +105,9 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
     - Description         : **DB Security Group private**
     - VPC                 : **db-vpc**
     - Inbound rules (Click **Add rule**)
-      - Type : **All traffic**
-      - Source : **30.0.0.0/16**
+      - Rule 1
+        - Type : **All traffic**
+        - Source : **30.0.0.0/16**
 
     <br>
     
@@ -156,9 +152,6 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
     - Parameter group family : ***mysql8.0**
     - Group name : **db-param-group**
     - Description: **DB Parameter Group**
-    - VPC  : **db-vpc**
-    - Availability Zones : **us-east-1a** and **us-east-1b**
-    - Subnets: **30.0.2.0/24** and **30.0.4.0/24**
 
     <br>
     
@@ -244,7 +237,7 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
 
 02. On **Services** type **EC2** and select the service.
 
-03. In the left panel menu, under **Instances**,  click **Launch Templtes**.
+03. In the left panel menu, under **Instances**,  click **Launch Templates**.
 
 04. Select **Create launch template** and complete with below parameters.
 
@@ -252,12 +245,12 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
     - Application and OS Images (Amazon Machine Image)
       - Quick start: **Amazon Linux**
       - Amazon Machine Image (AMI) : **Amazon Linux 2 AMI (HVM)**
-      - AMI ID : **ami-069aabeee6f53e7bf**
     - Instance type : **t2.micro**
     - Key pair : **vockey** (or any from your choice)
     - Network Settings
       - Security groups : **db-sg-pub**
-      - Auto-assign public IP : **Enable**
+      - Add network interface
+        - Auto-assign public IP : **Enable**
     - Advanced details
       - User data
       > **Note** Replace **[RDS_ENDPOINT]** with the database endpoint captured in previous steps.
@@ -364,6 +357,22 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
 11. Click **Next** last time.
 
 12. Click **Create Auto Scaling group**.
+
+<br>
+
+#### **Config Load Balancer Security Group**
+
+01. In the left panel menu, under **Load Balancing**,  click **Load Balancers**.
+
+02. Click on **ec2-load-balancer** to open the Load Balancer page details.
+
+03. Click in the **Security** menu.
+
+04. Click **Edit**.
+
+05. Remove the default Security Group and add **db-sg-pub**.
+
+06. Click **Save Changes**.
 
 <br>
 
