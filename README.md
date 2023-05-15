@@ -326,12 +326,14 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
 
 06. Complete with below parameters.
 
-    - Load balancing : **Attach to a new load balancer**
-    - Attach to a new load balancer : **ec2-load-balancer**
-    - Load balancer scheme : **Internet-facing**
-    - Listeners and routing
-      - Default routing (forward to) : **Create a target group**
-      - New target group name : **ec2-target-group**
+    - Load balancing
+      - **Attach to a new load balancer**
+    - Attach to a new load balancer
+      - Load balancer name: **ec2-load-balancer**
+      - Load balancer scheme : **Internet-facing**
+      - Listeners and routing
+        - Default routing (forward to) : **Create a target group**
+        - New target group name : **ec2-target-group**
 
     <br>
 
