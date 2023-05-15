@@ -149,7 +149,7 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
 
 02. Click **Create parameter group** and complete with below parameters.
 
-    - Parameter group family : ***mysql8.0**
+    - Parameter group family : **mysql8.0**
     - Group name : **db-param-group**
     - Description: **DB Parameter Group**
 
