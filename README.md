@@ -392,7 +392,7 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
 
 01. In the left panel menu, under **Load Balancing**, click **Load Balancers**.
 
-02. Click on **ec2-load-balancer** and capture the valur for field **DNS name**.
+02. Click on **ec2-load-balancer** and capture the value for field **DNS name**.
 
 03. Open a browser tab and navigate to the load balancer **DNS name**.
 
@@ -400,6 +400,6 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
 
 ## **Congratulations**
 
-If you reach this step, you completed successfully the procedure.
+If you reach this step successfully, you completed the procedure.
 
 Don´t forget to destroy all resources avoiding unnecessary costs.
