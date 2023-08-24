@@ -14,6 +14,7 @@ module "network" {
 module "database" {
     source               = "./modules/database"
     rds_identifier       = "${var.rds_identifier}"
+    rds_engine_version   = "${var.rds_engine_version}"
     rds_sn_group_name    = "${var.rds_sn_group_name}"
     rds_param_group_name = "${var.rds_param_group_name}"
     rds_dbname           = "${var.rds_dbname}"

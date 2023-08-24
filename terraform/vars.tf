@@ -43,6 +43,11 @@ variable "rds_identifier" {
     default = "rds-notifier"
 }
 
+variable "rds_engine_version" {
+    type    = string
+    default = "8.0.33"
+}
+
 variable "rds_sn_group_name" {
     type    = string
     default = "rds-sn-group-notifier"
