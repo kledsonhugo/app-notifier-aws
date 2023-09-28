@@ -46,7 +46,7 @@ jobs:
     - name: Step 08 - Terraform Security Scanning Setup
       run : pip3 install Checkov
 
-    - name: Step 09 - Terraform Plan with Contract Run
+    - name: Step 09 - Terraform Security Scanning Run
       run : checkov --directory ./terraform
 
     - name: Step 10 - Terraform Apply
