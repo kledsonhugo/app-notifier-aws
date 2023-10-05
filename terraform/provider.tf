@@ -1,7 +1,7 @@
 # PROVIDER
 terraform {
 
-  required_version = "~> 1.5.4"
+  required_version = "~> 1.4.2"
 
   required_providers {
     aws = {
@@ -11,9 +11,9 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "tf-notifier-state-v1"
+    bucket         = "terraform-state-hike1"
     key            = "terraform.tfstate"
-    dynamodb_table = "tf-notifier-state-v1"
+    dynamodb_table = "terraform-state-lock-hike"
     region         = "us-east-1"
   }
 

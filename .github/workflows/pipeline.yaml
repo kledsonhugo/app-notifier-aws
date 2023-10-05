@@ -1,9 +1,10 @@
-name: IaC Lifecycle
+name: Kledsondelas
 
 on:
   push:
     branches:
-    - main
+    - develop
+
 
 jobs:
 
@@ -14,7 +15,7 @@ jobs:
 
     - name: Step 01 - Terraform Install
       env :
-        TERRAFORM_VERSION: "1.5.6"
+        TERRAFORM_VERSION: "1.4.2"
       run : |
         tf_version=$TERRAFORM_VERSION
         wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
@@ -28,7 +29,7 @@ jobs:
       uses: actions/checkout@v1
 
     - name: Step 04 - Set AWS Account
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v1-node16
       with:
         aws-access-key-id    : ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -37,17 +38,17 @@ jobs:
 
     - name: Step 05 - Terraform Init
       run : terraform -chdir=./terraform init -input=false
-
-    - name: Step 06 - Terraform Validate
+    
+    - name: Step 06 - Terraform Unit Tests
       run : terraform -chdir=./terraform validate
 
-    - name: Step 07 - Terraform Plan
-      # run : terraform -chdir=./terraform plan -input=false -out tfplan
-      run : terraform -chdir=./terraform plan -input=false -destroy -out tfplan
+    - name: Step 07 - Terraform Plan with Contract Tests
+      run : terraform -chdir=./terraform plan -input=false -out tfplan
+      #run : terraform -chdir=./terraform plan -input=false -destroy -out tfplan
 
     - name: Step 08 - Terraform Apply
       run : terraform -chdir=./terraform apply -auto-approve -input=false tfplan
 
     - name: Step 09 - Terraform Show
       run : terraform -chdir=./terraform show
-      
+      #pipoc
