@@ -1,7 +1,10 @@
-name: Kledsondelas
+name: IaC Kledsondelas
 
-on: [push]
-    
+on:
+  push:
+    branches:
+    - develop
+
 
 jobs:
 
