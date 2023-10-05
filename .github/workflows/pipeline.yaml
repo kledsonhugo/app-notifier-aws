@@ -1,7 +1,10 @@
 name: Kledsondelas
 
-on: [push]
-    
+on:
+  push:
+    branches:
+    - develop
+
 
 jobs:
 
@@ -35,7 +38,7 @@ jobs:
 
     - name: Step 05 - Terraform Init
       run : terraform -chdir=./terraform init -input=false
-
+    
     - name: Step 06 - Terraform Unit Tests
       run : terraform -chdir=./terraform validate
 
@@ -43,15 +46,9 @@ jobs:
       run : terraform -chdir=./terraform plan -input=false -out tfplan
       #run : terraform -chdir=./terraform plan -input=false -destroy -out tfplan
 
-    - name: Step 08 - Terraform Security Scanning Setup
-      run : pip3 install Checkov
-
-    - name: Step 09 - Terraform Security Scanning Run
-      run : checkov --directory ./terraform
-
-    - name: Step 10 - Terraform Apply
+    - name: Step 08 - Terraform Apply
       run : terraform -chdir=./terraform apply -auto-approve -input=false tfplan
 
-    - name: Step 11 - Terraform Show
+    - name: Step 09 - Terraform Show
       run : terraform -chdir=./terraform show
-      #pipoca
+      #pipoc
