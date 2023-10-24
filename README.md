@@ -398,7 +398,7 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
 
 02. Click on **ec2-load-balancer** and capture the value for field **DNS name**.
 
-03. Open a browser tab and navigate to the load balancer **DNS name. You should see a page like the example below.
+03. Open a browser tab and navigate to the load balancer **DNS name. You should see a page like the example below. Add a new contact to validate the PHP web application is adding data into RDS successfully.
 
     ![Notifier](/images/notifier.png)
 
