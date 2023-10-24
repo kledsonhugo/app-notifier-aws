@@ -376,6 +376,10 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
 
 06. Click **Save Changes**.
 
+    > **Note** 
+    > Process should take 2-5 minutes.
+    > Wait until status is **Active**.
+
 <br>
 
 #### **Validate Target Group**
