@@ -398,7 +398,9 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
 
 02. Click on **ec2-load-balancer** and capture the value for field **DNS name**.
 
-03. Open a browser tab and navigate to the load balancer **DNS name**.
+03. Open a browser tab and navigate to the load balancer **DNS name. You should see a page like the example below.
+
+    ![Notifier](/images/notifier.png)
 
 <br>
 
