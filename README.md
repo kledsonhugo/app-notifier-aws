@@ -163,13 +163,13 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store all contact info an
 
 05. In the **Filter Parameters** search field type **character_set_server**.
 
-06. Check the line with parameter **character_set_server** and select **utf8** in the **Values** combo box.
+06. Check the line with parameter **character_set_server** and type **utf8** in the **Value** field.
 
 07. Click **Save changes**.
 
 08. In the **Parameters** search field type **character_set_database**.
 
-09. Check the line with parameter **character_set_database** and select **utf8** in the **Values** combo box.
+09. Check the line with parameter **character_set_database** and type **utf8** in the **Value** field.
 
 10. Click **Save changes**.
 
