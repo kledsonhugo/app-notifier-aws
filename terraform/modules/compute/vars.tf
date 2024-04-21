@@ -1,17 +1,13 @@
-# NETWORK VARS DEFAULT VALUES (INPUT IS REQUIRED BECAUSE NO DEFAULT IS DEFINED)
 variable "vpc_id" {}
 variable "vpc_cidr" {}
 variable "vpc_sn_pub_az1_id" {}
 variable "vpc_sn_pub_az2_id" {}
-variable "vpc_sg_pub_id" {}
 
-# DATABASE VARS DEFAULT VALUES (INPUT IS REQUIRED BECAUSE NO DEFAULT IS DEFINED)
 variable "rds_endpoint" {}
 variable "rds_dbuser" {}
 variable "rds_dbpassword" {}
 variable "rds_dbname" {}
 
-# COMPUTE VARS DEFAULT VALUES
 variable "ec2_lt_name" {
   type    = string
   default = "ec2_lt_name"
@@ -40,31 +36,6 @@ variable "ec2_lb_name" {
 variable "ec2_lb_tg_name" {
   type    = string
   default = "ec2-lb-tg-name"
-}
-
-variable "ec2_lb_tg_protocol" {
-  type    = string
-  default = "HTTP"
-}
-
-variable "ec2_lb_tg_port" {
-  type    = number
-  default = 80
-}
-
-variable "ec2_lb_listener_protocol" {
-  type    = string
-  default = "HTTP"
-}
-
-variable "ec2_lb_listener_port" {
-  type    = number
-  default = 80
-}
-
-variable "ec2_lb_listener_action_type" {
-  type    = string
-  default = "forward"
 }
 
 variable "ec2_asg_name" {

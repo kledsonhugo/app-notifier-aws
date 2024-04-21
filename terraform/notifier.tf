@@ -1,7 +1,7 @@
 # ORCHESTRATOR
 module "rede" {
   source               = "./modules/rede"
-  vpc_cidr             = "10.0.0.0/16"
+  vpc_cidr             = var.vpc_cidr
   vpc_az1              = var.vpc_az1
   vpc_az2              = var.vpc_az2
   vpc_sn_pub_az1_cidr  = var.vpc_sn_pub_az1_cidr
@@ -19,10 +19,10 @@ module "dados" {
   rds_dbname           = var.rds_dbname
   rds_dbuser           = var.rds_dbuser
   rds_dbpassword       = var.rds_dbpassword
+  vpc_cidr             = var.vpc_cidr
+  vpc_id               = module.rede.vpc_id
   vpc_sn_priv_az1_id   = module.rede.vpc_sn_priv_az1_id
   vpc_sn_priv_az2_id   = module.rede.vpc_sn_priv_az2_id
-  vpc_sg_priv_id       = module.rede.vpc_sg_priv_id
-  depends_on           = [module.rede]
 }
 
 module "compute" {
@@ -41,10 +41,8 @@ module "compute" {
   vpc_id                   = module.rede.vpc_id
   vpc_sn_pub_az1_id        = module.rede.vpc_sn_pub_az1_id
   vpc_sn_pub_az2_id        = module.rede.vpc_sn_pub_az2_id
-  vpc_sg_pub_id            = module.rede.vpc_sg_pub_id
   rds_endpoint             = module.dados.rds_endpoint
   rds_dbuser               = var.rds_dbuser
   rds_dbpassword           = var.rds_dbpassword
   rds_dbname               = var.rds_dbname
-  depends_on               = [module.dados, module.rede]
 }
