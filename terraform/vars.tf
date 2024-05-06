@@ -1,4 +1,3 @@
-# NETWORK VARS CUSTOM VALUES
 variable "vpc_cidr" {
   type    = string
   default = "10.0.0.0/16"
@@ -34,7 +33,6 @@ variable "vpc_sn_priv_az2_cidr" {
   default = "10.0.4.0/24"
 }
 
-# DATABASE VARS CUSTOM VALUES
 variable "rds_identifier" {
   type    = string
   default = "rds-notifier"
@@ -70,7 +68,6 @@ variable "rds_dbpassword" {
   default = "rdsdbadminpwd"
 }
 
-# COMPUTE VARS CUSTOM VALUES
 variable "ec2_lt_name" {
   type    = string
   default = "ec2-lt-notifier"
