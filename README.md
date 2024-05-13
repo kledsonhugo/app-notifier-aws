@@ -233,7 +233,7 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store contact info.
         echo "Deploy PHP app"
         cd /tmp
         git clone https://github.com/kledsonhugo/app-notifier
-        cp /tmp/notifier/app/*.php /var/www/html/
+        cp /tmp/app-notifier/*.php /var/www/html/
         rm -rf /tmp/notifier
         
         echo "Config Apache WebServer"
