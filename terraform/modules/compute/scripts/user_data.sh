@@ -20,7 +20,7 @@ EOT
 cd /tmp
 git clone https://github.com/kledsonhugo/app-notifier
 cp /tmp/app-notifier/*.php /var/www/html/
-rm -rf /tmp/notifier
+rm -rf /tmp/app-notifier
 
 # Config Apache WebServer
 usermod -a -G apache ec2-user

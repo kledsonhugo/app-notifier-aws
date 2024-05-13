@@ -215,12 +215,13 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store contact info.
         ```
         #!/bin/bash
         
-        echo "Update/Install required OS packages"
+        # Update/Install required OS packages
         yum update -y
+        yum install -y httpd wget php-fpm php-mysqli php-json php php-devel telnet tree git
         amazon-linux-extras install -y php7.2 epel
-        yum install -y httpd mysql php-mtdowling-jmespath-php php-xml telnet tree git
+        yum install -y mysql php-mtdowling-jmespath-php php-xml
         
-        echo "Config PHP app Connection to Database"
+        # Config PHP app Connection to Database
         cat <<EOT >> /var/www/config.php
         <?php
         define('DB_SERVER', 'RDS_ENDPOINT');
@@ -230,20 +231,20 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store contact info.
         ?>
         EOT
         
-        echo "Deploy PHP app"
+        # Deploy PHP app
         cd /tmp
         git clone https://github.com/kledsonhugo/app-notifier
         cp /tmp/app-notifier/*.php /var/www/html/
-        rm -rf /tmp/notifier
+        rm -rf /tmp/app-notifier
         
-        echo "Config Apache WebServer"
+        # Config Apache WebServer
         usermod -a -G apache ec2-user
         chown -R ec2-user:apache /var/www
         chmod 2775 /var/www
         find /var/www -type d -exec chmod 2775 {} \;
         find /var/www -type f -exec chmod 0664 {} \;
         
-        echo "Start Apache WebServer"
+        # Start Apache WebServer
         systemctl enable httpd
         service httpd restart
         ```
