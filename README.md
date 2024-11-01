@@ -120,7 +120,7 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store contact info.
 
 03. Click **Edit**.
 
-04. In the **Filter Parameters** search field, type **character_set_server**.
+04. In the **Modifiable parameters** search field, type **character_set_server**.
 
 05. In the **Value** field, type **utf8**.
 
@@ -134,7 +134,7 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store contact info.
 
 03. Click **Edit**.
 
-04. In the **Filter Parameters** search field, type **character_set_database**.
+04. In the **Modifiable parameters** search field, type **character_set_database**.
 
 05. In the **Value** field, type **utf8**.
 
@@ -153,8 +153,8 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store contact info.
     - Settings
       - DB instance identifier: **db-instance-id**
       - Master username: **dbadmin**
-      - Credentials management: **selected**
-        - Self managed
+      - Credentials management
+        - Self managed: **selected**
         - Master password: **dbpassword**
         - Confirm master password: **dbpassword**
     - Instance configuration
