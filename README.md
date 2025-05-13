@@ -1,216 +1,216 @@
-# PHP app with RDS and SNS
+# Aplicativo PHP com RDS e SNS
 
-Sample PHP WebApp to store contact info.
+Aplicativo Web PHP de exemplo para armazenar informações de contato.
 
-The app uses [AWS RDS](https://aws.amazon.com/rds/) to store contact info.
+O aplicativo usa [AWS RDS](https://aws.amazon.com/rds/) para armazenar informações de contato.
 
-## Target architecture
+## Arquitetura alvo
 
 ![Notifier](/images/target_architecture.png)
 
-## Step-by-step
+## Passo-a-passo
 
-### **Create Network**
+### **Criar Rede**
 
-01. Login into AWS Console.
+01. Faça login no Console da AWS.
 
-02. On **Services** type **VPC** and select the service.
+02. Em **Serviços**, digite **VPC** e selecione o serviço.
 
-03. Select **Create VPC** and complete with below parameters.
+03. Selecione **Criar VPC** e preencha com os parâmetros abaixo.
 
-    - Resources to create: **VPC and more**
-    - Auto-generate: **db**
-    - IPv4 CIDR block: **30.0.0.0/16**
-    - Number of Availability Zones (AZs): **2**
-    - Customize AZs
-      - First availability zone: **us-east-1a**
-      - Second availability zone: **us-east-1b**
-    - Number of public subnets: **2**
-    - Number of private subnets: **2**
-    - Customize subnets CIDR blocks
-      - Public subnet CIDR block in us-east-1a: **30.0.1.0/24**
-      - Public subnet CIDR block in us-east-1b: **30.0.3.0/24**
-      - Private subnet CIDR block in us-east-1a: **30.0.2.0/24**
-      - Private subnet CIDR block in us-east-1b: **30.0.4.0/24**
-    - NAT gateways: **None**
-    - VPC endpoints: **None**
+    - Recursos a serem criados: **VPC e muito mais**
+    - Gerar automaticamente: **db**
+    - Bloco CIDR IPv4: **30.0.0.0/16**
+    - Número de Zonas de Disponibilidade (AZs): **2**
+    - Personalizar AZs
+      - Primeira zona de disponibilidade: **us-east-1a**
+      - Segunda zona de disponibilidade: **us-east-1b**
+    - Número de sub-redes públicas: **2**
+    - Número de sub-redes privadas: **2**
+    - Personalizar blocos CIDR das sub-redes
+      - Bloco CIDR da sub-rede pública em us-east-1a: **30.0.1.0/24**
+      - Bloco CIDR da sub-rede pública em us-east-1b: **30.0.3.0/24**
+      - Bloco CIDR da sub-rede privada em us-east-1a: **30.0.2.0/24**
+      - Bloco CIDR da sub-rede privada em us-east-1b: **30.0.4.0/24**
+    - Gateways NAT (USD): **Nenhuma**
+    - Endpoints da VPC: **Nenhuma**
     
-04. Click **Create VPC**.
+04. Clique em **Criar VPC**.
 
-### **Create Firewall**
+### **Criar Firewall**
 
-#### **Public Firewall**
+#### **Firewall Público**
 
-01. On **Services** type **VPC** and select the service.
+01. Em **Serviços**, digite **VPC** e selecione o serviço.
 
-02. In the left side menu click **Security Groups**.
+02. No menu lateral esquerdo, clique em **Grupos de segurança**.
 
-03. Click **Create security group** and complete with below parameters.
+03. Clique em **Criar grupo de segurança** e preencha com os parâmetros abaixo.
 
-    - Security group name: **db-sg-pub**
-    - Description: **DB Security Group public**
+    - Nome do grupo de segurança: **db-sg-pub**
+    - Descrição: **Grupo de Segurança DB público**
     - VPC: **db-vpc**
-    - Inbound rules (Click **Add rule** for each rule below)
-      - Rule 1
-        - Type: **All traffic**
-        - Source: **30.0.0.0/16**
-      - Rule 2
-        - Type: **HTTP**
-        - Source: **0.0.0.0/0**
-      - Rule 3
-        - Type: **SSH**
-        - Source: **0.0.0.0/0**
+    - Regras de entrada (Clique em **Adicionar regra** para cada regra abaixo)
+      - Regra 1
+        - Tipo: **Todo o tráfego**
+        - Origem: **30.0.0.0/16**
+      - Regra 2
+        - Tipo: **HTTP**
+        - Origem: **0.0.0.0/0**
+      - Regra 3
+        - Tipo: **SSH**
+        - Origem: **0.0.0.0/0**
 
-04. Click **Create security group**.
+04. Clique em **Criar grupo de segurança**.
 
-#### **Private Firewall**
+#### **Firewall Privado**
 
-01. On **Services** type **VPC** and select the service.
+01. Em **Serviços**, digite **VPC** e selecione o serviço.
 
-02. In the left side menu click **Security Groups**.
+02. No menu lateral esquerdo, clique em **Grupos de Segurança**.
 
-03. Click **Create security group** and complete with below parameters.
+03. Clique em **Criar grupo de segurança** e preencha com os parâmetros abaixo.
 
-    - Security group name: **db-sg-priv**
-    - Description: **DB Security Group private**
+    - Nome do grupo de segurança: **db-sg-priv**
+    - Descrição: **Grupo de Segurança DB privado**
     - VPC: **db-vpc**
-    - Inbound rules (Click **Add rule**)
-      - Rule 1
-        - Type: **All traffic**
-        - Source: **30.0.0.0/16**
+    - Regras de entrada (Clique em **Adicionar regra**)
+      - Regra 1
+        - Tipo: **Todo o tráfego**
+        - Origem: **30.0.0.0/16**
 
-04. Click **Create security group**.
+04. Clique em **Criar grupo de segurança**.
 
-### **Create Database**
+### **Criar Banco de Dados**
 
-01. On **Services** type **RDS** and select the service.
+01. Em **Serviços**, digite **RDS** e selecione o serviço **Aurora and RDS**.
 
-#### **Create Subnet Group**
+#### **Criar Grupo de Sub-redes**
 
-01. In the left panel menu click **Subnet groups**.
+01. No menu lateral esquerdo, clique em **Grupos de sub-redes**.
 
-02. Click **Create DB subnet group** and complete with below parameters.
+02. Clique em **Criar grupo de sub-redes de banco de dados** e preencha com os parâmetros abaixo.
 
-    - Name: **db-sn-group**
-    - Description: **DB Subnet Group**
+    - Nome: **db-sn-group**
+    - Descrição: **Grupo de Sub-redes do BD**
     - VPC: **db-vpc**
-    - Availability Zones: **us-east-1a** and **us-east-1b**
-    - Subnets: **30.0.2.0/24** and **30.0.4.0/24**
+    - Zonas de Disponibilidade: **us-east-1a** e **us-east-1b**
+    - Sub-redes: **30.0.2.0/24** e **30.0.4.0/24**
 
-03. Click **Create**.
+03. Clique em **Criar**.
 
-#### **Create Parameter Group**
+#### **Criar Grupo de Parâmetros**
 
-01. In the left panel menu click **Parameter groups**.
+01. No menu lateral esquerdo, clique em **Grupos de parâmetros**.
 
-02. Click **Create parameter group** and complete with below parameters.
+02. Clique em **Criar grupo de parâmetros** e preencha com os parâmetros abaixo.
 
-    - Parameter group name: **db-param-group**
-    - Description: **DB Parameter Group**
-    - Engine Type: **MySQL Community Edition**
-    - Parameter group family: **mysql8.0**
+    - Nome do grupo de parâmetros: **db-param-group**
+    - Descrição: **Grupo de Parâmetros do BD**
+    - Tipo de mecanismo: **MySQL Community**
+    - Família do grupo de parâmetros: **mysql8.0**
 
-03. Click **Create**.
+03. Clique em **Criar**.
 
-#### **Config Parameter Group for parameter character_set_server**
+#### **Configurar Grupo de Parâmetros para o parâmetro character_set_server**
 
-01. In the left panel menu click **Parameter groups**.
+01. No menu lateral esquerdo, clique em **Grupos de parâmetros**.
 
-02. Click in the link **db-param-group**.
+02. Clique no link **db-param-group**.
 
-03. Click **Edit**.
+03. Clique em **Editar**.
 
-04. In the **Modifiable parameters** search field, type **character_set_server**.
+04. No campo de busca **Parâmetros modificáveis**, digite **character_set_server**.
 
-05. In the **Value** field, type **utf8**.
+05. No campo **Valor**, digite **utf8**.
 
-06. Click **Save changes**.
+06. Clique em **Salvar alterações**.
 
-#### **Config Parameter Group for parameter character_set_database**
+#### **Configurar Grupo de Parâmetros para o parâmetro character_set_database**
 
-01. In the left panel menu click **Parameter groups**.
+01. No menu lateral esquerdo, clique em **Grupos de parâmetros**.
 
-02. Click in the link **db-param-group**.
+02. Clique no link **db-param-group**.
 
-03. Click **Edit**.
+03. Clique em **Editar**.
 
-04. In the **Modifiable parameters** search field, type **character_set_database**.
+04. No campo de busca **Parâmetros modificáveis**, digite **character_set_database**.
 
-05. In the **Value** field, type **utf8**.
+05. No campo **Valor**, digite **utf8**.
 
-06. Click **Save changes**.
+06. Clique em **Salvar alterações**.
 
-#### **Create database**
+#### **Criar banco de dados**
 
-01. In the left panel menu click **Databases**.
+01. No menu lateral esquerdo, clique em **Bancos de dados**.
 
-02. Click **Create database** and complete with below parameters.
+02. Clique em **Criar banco de dados** e preencha com os parâmetros abaixo.
 
-    - Engine options
-      - Engine type: **MySQL**
-    - Availability and durability
-      - Deployment options: **Multi-AZ DB instance**
-    - Settings
-      - DB instance identifier: **db-instance-id**
-      - Master username: **dbadmin**
-      - Credentials management
-        - Self managed: **selected**
-        - Master password: **dbpassword**
-        - Confirm master password: **dbpassword**
-    - Instance configuration
-      - DB instance class: **Burstable classes (includes t classes)**
-    - Storage
-      - Storage type : **gp2**
-      - Storage autoscaling
-        - Enable storage autoscaling: **disabled**
-    - Connectivity
-      - Virtual private cloud (VPC): **db-vpc**
-      - DB subnet group: **db-sn-group**
-      - Existing VPC security groups: **db-sg-priv**
+    - Opções do mecanismo
+      - Tipo de mecanismo: **MySQL**
+    - Disponibilidade e durabilidade
+      - Opções de implantação: **Implantação de instância de banco de dados Multi-AZ (2 instâncias)**
+    - Configurações
+      - Identificador da instância de banco de dados: **db-instance-id**
+      - Nome do usuário principal: **dbadmin**
+      - Gerenciamento de credenciais
+        - Autogerenciada: **selecionado**
+        - Senha principal: **dbpassword**
+        - Confirmar senha principal: **dbpassword**
+    - Configuração da instância
+      - Classe da instância de BD: **Classes com capacidade de intermitência (inclui classes t)**
+    - Armazenamento
+      - Tipo de armazenamento: **gp2**
+      - Configuração adicional de armazenamento
+        - Habilitar escalonamento automático de armazenamento: **desabilitado**
+    - Conectividade
+      - Nuvem privada virtual (VPC): **db-vpc**
+      - Grupo de sub-redes de banco de dados: **db-sn-group**
+      - Grupos de segurança da VPC existentes: **db-sg-priv**
 
-        > **Note:** Remove the **default** security group if selected.
+        > **Nota:** Remova o grupo de segurança **default** se selecionado.
 
-    - Monitoring
-      - Enable Enhanced monitoring: **disabled**
-    - Additional configuration
-      - Initial database name: **dbname**
-      - DB parameter group: **db-param-group**
-      - Enable automated backups: **disabled**
-      - Enable encryption: **disabled**
-      - Enable auto minor version upgrade: **disabled**
-      - Enable deletion protection: **disabled**
+    - Monitoramento
+      - Monitoramento do Enhanced Monitoring: **desabilitado**
+    - Configuração adicional
+      - Nome do banco de dados inicial: **dbname**
+      - Grupo de parâmetros do banco de dados: **db-param-group**
+      - Habilitar backups automáticos: **desabilitado**
+      - Habilitar criptografia: **desabilitado**
+      - Habilitar o upgrade automático da versão secundária: **desabilitado**
+      - Habilitar proteção contra exclusão: **desabilitado**
 
-03. Click **Create database**.
+03. Clique em **Criar banco de dados**.
 
-    > **Note:** Validate database creation. Process should take 10-15 minutes. Wait until status is **Available**.
+    > **Nota:** Valide a criação do banco de dados. O processo deve levar de 10 a 15 minutos. Aguarde até que o status seja **Disponível**.
 
-04. Click in the link with **db-instance-id** and capture the **Endpoint** value.
+04. Clique no link com **db-instance-id** e capture o valor do campo **Endpoint**.
 
-    > **Note:** It will be used on later steps.
+    > **Nota:** Ele será usado em etapas posteriores.
 
-### **Create Load Balancer with Autoscaling**
+### **Criar Balanceador de Carga com Escalonamento Automático**
 
-#### **Create EC2 Launch template**
+#### **Criar Modelo de Inicialização do EC2**
 
-01. On **Services** type **EC2** and select the service.
+01. Em **Serviços**, digite **EC2** e selecione o serviço.
 
-02. In the left panel menu, under **Instances**,  click **Launch Templates**.
+02. No menu lateral esquerdo, em **Instâncias**, clique em **Modelos de execução**.
 
-04. Select **Create launch template** and complete with below parameters.
+04. Selecione **Criar modelo de execução** e preencha com os parâmetros abaixo.
 
-    - Launch template name : **ec2-launch-template**
-    - Application and OS Images (Amazon Machine Image)
-      - Quick start: **Amazon Linux**
-      - Amazon Machine Image (AMI) : **Amazon Linux 2 AMI (HVM)**
-    - Instance type : **t2.micro**
-    - Key pair : **vockey** (or any from your choice)
-    - Network Settings
-      - Security groups : **db-sg-pub**
-      - Advanced network configuration
-        - Add network interface
-          - Auto-assign public IP : **Enable**
-    - Advanced details
-      - User data - optional
+    - Nome do modelo de inicialização: **ec2-launch-template**
+    - Imagens de aplicação e de sistema operacional (imagem de máquina da Amazon)
+      - Início rápido: **Amazon Linux**
+      - Imagem de máquina da Amazon (AMI): **Amazon Linux 2 AMI (HVM)**
+    - Tipo de instância: **t2.micro**
+    - Nome do par de chaves: **vockey** (ou qualquer outro de sua escolha)
+    - Configurações de rede
+      - Grupos de segurança: **db-sg-pub**
+      - Configuração avançada de rede
+        - Adicionar interface de rede
+          - Atribuir IP público automaticamente: **Habilitar**
+    - Detalhes avançados
+      - Dados do usuário (opcional)
 
         ```
         #!/bin/bash
@@ -249,90 +249,90 @@ The app uses [AWS RDS](https://aws.amazon.com/rds/) to store contact info.
         service httpd restart
         ```
 
-        > **Note:** Replace **RDS_ENDPOINT** with the value of the RDS service endpoint captured in previous steps.
+        > **Nota:** Substitua **RDS_ENDPOINT** pelo valor do endpoint do serviço RDS capturado nas etapas anteriores.
     
-05. Click **Create launch template**.
+05. Clique em **Criar modelo de execução**.
 
-#### **Create EC2 Auto Scaling Group**
+#### **Criar Grupos do Auto Scaling**
 
-01. In the left panel menu, under **Auto Scaling**,  click **Auto Scaling Groups**.
+01. No menu lateral esquerdo, em **Auto Scalling**, clique em **Grupos Auto Scaling**.
 
-02. Select **Create Auto Scaling group** and complete with below parameters.
+02. Selecione **Criar grupo do Auto Scaling** e preencha com os parâmetros abaixo.
 
-    - Auto Scaling group name: **ec2-auto-scaling-group**
-    - Launch template: **ec2-launch-template**
+    - Nome do grupo do Auto Scaling: **ec2-auto-scaling-group**
+    - Modelo de execução: **ec2-launch-template**
 
-03. Click **Next**.
+03. Clique em **Próximo**.
 
-04. Complete with below parameters.
+04. Preencha com os parâmetros abaixo.
 
     - VPC: **db-vpc**
-    - Availability Zones and subnets: **30.0.1.0/24** and **30.0.3.0/24**
+    - Zonas de Disponibilidade e sub-redes: **30.0.1.0/24** e **30.0.3.0/24**
 
-05. Click **Next**.
+05. Clique em **Próximo**.
 
-06. Complete with below parameters.
+06. Preencha com os parâmetros abaixo.
 
-    - Load balancing
-      - **Attach to a new load balancer**
-    - Attach to a new load balancer
-      - Load balancer name: **ec2-load-balancer**
-      - Load balancer scheme: **Internet-facing**
-      - Listeners and routing
-        - Default routing (forward to): **Create a target group**
-        - New target group name: **ec2-target-group**
+    - Balanceamento de carga
+      - **Anexar a um novo balanceador de carga**
+    - Anexar a um novo balanceador de carga
+      - Nome do balanceador de carga: **ec2-load-balancer**
+      - Esquema do balanceador de carga: **Internet-facing**
+      - Listeners e roteamento
+        - Roteamento padrão (encaminhar para): **Criar um grupo de destino**
+        - Nome do novo grupo de destinos: **ec2-target-group**
 
-07. Click **Next**.
+07. Clique em **Próximo**.
 
-08. Complete with below parameters.
+08. Preencha com os parâmetros abaixo.
 
-    - Group size
-      - Desired capacity: **2**
+    - Tamanho do grupo
+      - Capacidade desejada: **2**
 
-09. Click **Next**.
+09. Clique em **Próximo**.
 
-10. Click **Next**.
+10. Clique em **Próximo**.
 
-11. Click **Next**.
+11. Clique em **Próximo**.
 
-12. Click **Create Auto Scaling group**.
+12. Clique em **Criar grupo do Auto Scaling**.
 
-#### **Config Load Balancer Security Group**
+#### **Configurar Grupo de Segurança do Balanceador de Carga**
 
-01. In the left panel menu, under **Load Balancing**,  click **Load Balancers**.
+01. No menu lateral esquerdo, em **Balanceamento de Carga**, clique em **Load balancers**.
 
-02. Click on **ec2-load-balancer** to open the Load Balancer page details.
+02. Clique em **ec2-load-balancer** para abrir a página de detalhes do Balanceador de Carga.
 
-03. Click in the **Security** menu.
+03. Clique no menu **Segurança**.
 
-04. Click **Edit**.
+04. Clique em **Editar**.
 
-05. Remove the default Security Group and add **db-sg-pub**.
+05. Remova o Grupo de Segurança padrão e adicione **db-sg-pub**.
 
-06. Click **Save Changes**.
+06. Clique em **Salvar Alterações**.
 
-#### **Validate Target Group**
+#### **Validar Grupo de Destino**
 
-01. In the left panel menu, under **Load Balancing**, click **Target Groups**.
+01. No menu lateral esquerdo, em **Balanceamento de Carga**, clique em **Grupos de Destino**.
 
-02. Click on **ec2-target-group** and validate if 2 instances are **Healthy**.
+02. Clique em **ec2-target-group** e valide se 2 instâncias estão com status **Íntegro**.
 
-    > **Note** The instance registration process takes 5-10 minutes.
+    > **Nota:** O processo de registro das instâncias leva de 5 a 10 minutos.
 
-#### **Validate Load Balancer**
+#### **Validar Balanceador de Carga**
 
-01. In the left panel menu, under **Load Balancing**, click **Load Balancers**.
+01. No menu lateral esquerdo, em **Balanceamento de Carga**, clique em **Load balancers**.
 
-02. Click on **ec2-load-balancer** and capture the value for field **DNS name**.
+02. Clique em **ec2-load-balancer** e capture o valor do campo **Nome DNS**.
 
-03. Open a browser tab and navigate to **http://DNS_NAME**. Replace **DNS_NAME** with the value captured on previous step.
+03. Abra uma aba no navegador e navegue para **http://NOME_DNS**. Substitua **NOME_DNS** pelo valor capturado na etapa anterior.
 
-    > **Note:** You should see a page like the example below. Add a new contact to validate the PHP web application is adding data into RDS successfully.
+    > **Nota:** Você deve ver uma página como o exemplo abaixo. Adicione um novo contato para validar que o aplicativo web PHP está adicionando dados no RDS com sucesso.
 
       ![Notifier](/images/notifier.png)
 
-## **Congratulations**
+## **Parabéns**
 
-If you reach this point successfully, you completed the procedure.
+Se você chegou até aqui com sucesso, completou o procedimento.
 
-Don´t forget to destroy all resources avoiding unnecessary costs.
+Não se esqueça de destruir todos os recursos para evitar custos desnecessários.

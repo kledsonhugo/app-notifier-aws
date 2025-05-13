@@ -105,7 +105,7 @@ variable "ec2_asg_name" {
 
 variable "ec2_asg_desired_capacity" {
   type    = number
-  default = 4
+  default = 6
 }
 
 variable "ec2_asg_min_size" {
